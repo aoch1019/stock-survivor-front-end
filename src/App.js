@@ -1,28 +1,34 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
 import './App.css';
+import PickContainer from './containers/PickContainer'
 
 class App extends Component {
-  render() {
-    return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
-      </div>
-    );
+  state = {
+    stocks: []
   }
+
+
+  async getStocks(){
+    const stockList = await fetch('http://localhost:3000/stocks').then(res => res.json())
+    this.setState({
+      stocks: stockList
+    })
+  }
+
+  componentDidMount(){
+    this.getStocks()
+  }
+
+
+render() {
+  return (
+    <div className="App">
+      < PickContainer stocks={this.state.stocks} />
+    </div>
+  );
 }
+
+
+} /* End of class */
 
 export default App;
