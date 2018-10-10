@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import './App.css';
-import PickContainer from './containers/PickContainer'
+import TodaysPickContainer from './containers/TodaysPickContainer'
 
 class App extends Component {
   state = {
@@ -23,7 +23,7 @@ class App extends Component {
 render() {
   return (
     <div className="App">
-      < PickContainer stocks={this.state.stocks} />
+      < TodaysPickContainer stocks={this.state.stocks} />
     </div>
   );
 }
