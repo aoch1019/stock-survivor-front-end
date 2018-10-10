@@ -7,26 +7,33 @@ export default class MakePickContainer extends Component{
     super(props)
 
     this.state = {
-      currSearch: ""
+      currSearch: "",
+      currSelection: null
     }
 
     this.handleSearchInputChange = this.handleSearchInputChange.bind(this)
+    this.selectStock = this.selectStock.bind(this)
   }
 
+  selectStock(stockInfo){
+    this.setState({
+      currSelection: stockInfo
+    }, () => console.log(this.state.currSelection))
+  }
 
-handleSearchInputChange(event){
-  this.setState({
-    currSearch: event.target.value
-  })
-}
+  handleSearchInputChange(event){
+    this.setState({
+      currSearch: event.target.value
+    })
+  }
 
-render(){
-  return(
-    <React.Fragment>
-      < Search handleSearchInputChange={this.handleSearchInputChange}/>
-      < StockTable stocks={this.props.stocks} currSearch={this.state.currSearch}/>
-    </React.Fragment>
-  )
-}
+  render(){
+    return(
+      <React.Fragment>
+        < Search handleSearchInputChange={this.handleSearchInputChange}/>
+        < StockTable stocks={this.props.stocks} currSearch={this.state.currSearch} selectStock={this.selectStock}/>
+      </React.Fragment>
+    )
+  }
 
 }

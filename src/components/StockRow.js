@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-export default class Stock extends Component{
+export default class StockRow extends Component{
   state = {
     currPrice: null
   }
@@ -23,6 +23,7 @@ export default class Stock extends Component{
         <th> {this.props.stockInfo.ticker} </th>
         <th> {this.props.stockInfo.industry} </th>
         <th> {this.state.currPrice} </th>
+        <th> <button className="tiny ui button" onClick={() => this.props.selectStock(this.props.stockInfo)} >Make Pick</button></th>
       </tr>
     )
   }

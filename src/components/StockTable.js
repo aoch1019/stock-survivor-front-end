@@ -1,5 +1,5 @@
 import React from 'react';
-import Stock from './Stock'
+import StockRow from './StockRow'
 
 const StockTable = (props) => {
 
@@ -27,6 +27,11 @@ const StockTable = (props) => {
                     Current Price
                   </h3>
                 </th>
+                <th>
+                  <h3 className="ui center aligned header">
+                    Select
+                  </h3>
+                </th>
               </tr>
 
               {props.stocks.map(function(stockInfo, idx){
@@ -34,7 +39,7 @@ const StockTable = (props) => {
                       ||
                       stockInfo.ticker.toLowerCase().includes(props.currSearch.toLowerCase()))
                       &&
-                      < Stock key={idx} stockInfo={stockInfo} />
+                      < StockRow key={idx} stockInfo={stockInfo} selectStock={props.selectStock}/>
               })}
 
             </tbody>
