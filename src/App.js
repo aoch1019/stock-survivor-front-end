@@ -8,7 +8,11 @@ class App extends Component {
 
   async getStocksFromAPI(){
     const stockList = await fetch('http://localhost:3000/stocks').then(res => res.json())
-    this.props.getStocks(stockList)
+    const stocksWithPrices = await Promise.all(stockList.map(async (stock) => {
+      const stockQuote = await fetch(`https://api.iextrading.com/1.0/stock/${stock.ticker}/book`).then(res => res.json())
+      return {...stock, closing_price: stockQuote.quote.close}
+    }))
+    this.props.getStocks(stocksWithPrices)
   }
 
   componentDidMount(){

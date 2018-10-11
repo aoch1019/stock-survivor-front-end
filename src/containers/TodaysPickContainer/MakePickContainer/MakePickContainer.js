@@ -9,7 +9,7 @@ export default class MakePickContainer extends Component{
 
     this.state = {
       currSearch: "",
-      currSelection: null
+      currStockSelection: null
     }
 
     this.handleSearchInputChange = this.handleSearchInputChange.bind(this)
@@ -19,7 +19,7 @@ export default class MakePickContainer extends Component{
 
   selectStock(stockInfo){
     this.setState({
-      currSelection: stockInfo
+      currStockSelection: stockInfo
     })
   }
 
@@ -31,7 +31,7 @@ export default class MakePickContainer extends Component{
 
   handleNoClick(){
     this.setState({
-      currSelection: null
+      currStockSelection: null
     })
   }
 
@@ -40,9 +40,9 @@ export default class MakePickContainer extends Component{
       <React.Fragment>
         < Search handleSearchInputChange={this.handleSearchInputChange} />
       {
-        this.state.currSelection !== null
+        this.state.currStockSelection !== null
         &&
-        < SubmitField currSelection={this.state.currSelection} handleNoClick={this.handleNoClick}/>
+        < SubmitField currStockSelection={this.state.currStockSelection} handleNoClick={this.handleNoClick}/>
       }
         < StockTable currSearch={this.state.currSearch} selectStock={this.selectStock} />
       </React.Fragment>

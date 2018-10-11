@@ -3,11 +3,28 @@ import { connect } from 'react-redux'
 
 class SubmitField extends Component{
 
+  async createPick(){
+    const pickObj = await fetch(`http://localhost:3000/picks`, {
+                              headers: {
+                                'Accept': 'application/json',
+                                'Content-Type': 'application/json'
+                              },
+                              method: 'POST',
+                              body: JSON.stringify({
+                                initial_price: this.props.currStockSelection.closing_price,
+                                day: this.props.currDay,
+                                entry_id: this.props.currEntry.id,
+                                stock_id: this.props.currStockSelection.id
+                              })
+                            }).then(res => res.json())
+      this.props.makeStockPick(pickObj)
+  }
+
   render(){
     return(
       <div>
-        Would you like to submit {this.props.currSelection.name}?
-        <button onClick={() => this.props.makeStockPick(this.props.currSelection)}>Yes</button>
+        Would you like to submit {this.props.currStockSelection.name}?
+        <button onClick={() => this.createPick()}>Yes</button>
         <button onClick={this.props.handleNoClick}>No</button>
       </div>
     )
@@ -15,12 +32,19 @@ class SubmitField extends Component{
 
 } /* End of class */
 
+function mapStateToProps(state){
+  return {
+    currEntry: state.currEntry,
+    currDay: state.currDay
+  }
+}
+
 function mapDispatchToProps(dispatch){
   return {
-    makeStockPick: (stock) => {
-      dispatch({type: 'MAKE_STOCK_PICK', payload: stock})
+    makeStockPick: (pick) => {
+      dispatch({type: 'MAKE_STOCK_PICK', payload: pick})
     }
   }
 }
 
-export default connect(null, mapDispatchToProps)(SubmitField)
+export default connect(mapStateToProps, mapDispatchToProps)(SubmitField)

@@ -1,31 +1,17 @@
-import React, { Component } from 'react';
+import React from 'react';
 
-export default class StockRow extends Component{
-  state = {
-    currPrice: null
-  }
+const StockRow = (props) => {
 
-  componentDidMount(){
-    this.getPrice()
-  }
-
-  async getPrice(){
-    const stockQuote = await fetch(`https://api.iextrading.com/1.0/stock/${this.props.stockInfo.ticker}/book`).then(res => res.json())
-    this.setState({
-      currPrice: stockQuote.quote.close
-    })
-  }
-
-  render(){
-    return(
-      <tr>
-        <th> {this.props.stockInfo.name} </th>
-        <th> {this.props.stockInfo.ticker} </th>
-        <th> {this.props.stockInfo.industry} </th>
-        <th> {this.state.currPrice} </th>
-        <th> <button className="tiny ui button" onClick={() => this.props.selectStock(this.props.stockInfo)} >Make Pick</button></th>
-      </tr>
-    )
-  }
+  return(
+    <tr>
+      <th> {props.stockInfo.name} </th>
+      <th> {props.stockInfo.ticker} </th>
+      <th> {props.stockInfo.industry} </th>
+      <th> {props.stockInfo.closing_price} </th>
+      <th> <button className="tiny ui button" onClick={() => props.selectStock(props.stockInfo)} >Make Pick</button></th>
+    </tr>
+  )
 
 }
+
+export default StockRow
