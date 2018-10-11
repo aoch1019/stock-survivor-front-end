@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import './App.css';
-import TodaysPickContainer from './containers/TodaysPickContainer'
-import LoginContainer from './containers/LoginContainer'
+import TodaysPickContainer from './containers/TodaysPickContainer/TodaysPickContainer'
+import LoginContainer from './containers/LoginContainer/LoginContainer'
 import { connect } from 'react-redux'
 
 class App extends Component {
@@ -20,7 +20,7 @@ render() {
     <React.Fragment>
       {this.props.currUser !== null &&
         <div>
-          Logged in as {this.props.currUser} <button onClick={() => this.props.changeUser(null)}>Logout</button>
+          Logged in as {this.props.currUser.name} <button onClick={() => this.props.changeUser(null)}>Logout</button>
         </div>
       }
       <div className="App">

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import Login from '../components/Login-Signup-components/Login'
-import Signup from '../components/Login-Signup-components/Signup'
+import Login from './Login-Signup-components/Login'
+import Signup from './Login-Signup-components/Signup'
 
 export default class LoginContainer extends Component{
   constructor(props){
@@ -24,7 +24,7 @@ export default class LoginContainer extends Component{
       <div>
         {this.state.currForm === "login"
         ?
-        < Login handleLoginSubmit={this.props.handleLoginSubmit} changeToSignup={this.changeToSignup}/>
+        < Login changeToSignup={this.changeToSignup}/>
         :
         < Signup handleLoginSubmit={this.props.handleLoginSubmit} />}
       </div>

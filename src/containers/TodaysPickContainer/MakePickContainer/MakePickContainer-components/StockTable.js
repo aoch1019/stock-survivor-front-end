@@ -25,7 +25,7 @@ const StockTable = (props) => {
                 </th>
                 <th>
                   <h3 className="ui center aligned header">
-                    Current Price
+                    Last Closing Price
                   </h3>
                 </th>
                 <th>

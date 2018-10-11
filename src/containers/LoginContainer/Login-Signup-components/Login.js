@@ -19,10 +19,16 @@ class Login extends Component{
     })
   }
 
+  async getUserFromAPI(){
+    const userList = await fetch('http://localhost:3000/users').then(res => res.json())
+    const userObj = userList.find(user => user.name === this.state.currInput)
+    !!userObj ? this.props.changeUser(userObj) : alert("User not found, please try again!")
+  }
+
   render(){
     return(
       <React.Fragment>
-        <form onSubmit={(event) => {event.preventDefault(); this.props.changeUser(this.state.currInput)}} className="ui form">
+        <form onSubmit={(event) => {event.preventDefault(); this.getUserFromAPI()}} className="ui form">
           <div className="field">
             <label>Please Login</label>
             <input

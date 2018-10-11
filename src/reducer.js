@@ -2,7 +2,8 @@ const defaultState = {
   stocks: [],
   currUser: null,
   currPoolId: 1,
-  currPick: null
+  currPick: null,
+  currEntry: null
 }
 
 function reducer(state = defaultState, action){
@@ -11,6 +12,8 @@ function reducer(state = defaultState, action){
       return {...state, stocks: action.payload}
     case "CHANGE_USER":
       return {...state, currUser: action.payload}
+    case "MAKE_STOCK_PICK":
+      return {...state, currPick: action.payload}
     default:
       return state
   }

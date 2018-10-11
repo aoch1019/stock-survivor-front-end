@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import StockTable from '../components/MakePickContainer-components/StockTable'
-import Search from '../components/MakePickContainer-components/Search'
-import SubmitField from '../components/MakePickContainer-components/SubmitField'
+import StockTable from './MakePickContainer-components/StockTable'
+import Search from './MakePickContainer-components/Search'
+import SubmitField from './MakePickContainer-components/SubmitField'
 
 export default class MakePickContainer extends Component{
   constructor(props){
@@ -15,7 +15,6 @@ export default class MakePickContainer extends Component{
     this.handleSearchInputChange = this.handleSearchInputChange.bind(this)
     this.selectStock = this.selectStock.bind(this)
     this.handleNoClick = this.handleNoClick.bind(this)
-    this.handleYesClick = this.handleYesClick.bind(this)
   }
 
   selectStock(stockInfo){
@@ -36,10 +35,6 @@ export default class MakePickContainer extends Component{
     })
   }
 
-  handleYesClick(){
-    alert("Pick Submitted!")
-  }
-
   render(){
     return(
       <React.Fragment>
@@ -47,7 +42,7 @@ export default class MakePickContainer extends Component{
       {
         this.state.currSelection !== null
         &&
-        < SubmitField currSelection={this.state.currSelection} handleYesClick={this.handleYesClick} handleNoClick={this.handleNoClick}/>
+        < SubmitField currSelection={this.state.currSelection} handleNoClick={this.handleNoClick}/>
       }
         < StockTable currSearch={this.state.currSearch} selectStock={this.selectStock} />
       </React.Fragment>

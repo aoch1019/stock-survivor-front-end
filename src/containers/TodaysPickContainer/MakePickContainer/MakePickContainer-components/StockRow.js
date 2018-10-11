@@ -12,7 +12,7 @@ export default class StockRow extends Component{
   async getPrice(){
     const stockQuote = await fetch(`https://api.iextrading.com/1.0/stock/${this.props.stockInfo.ticker}/book`).then(res => res.json())
     this.setState({
-      currPrice: stockQuote.quote.extendedPrice
+      currPrice: stockQuote.quote.close
     })
   }
 
