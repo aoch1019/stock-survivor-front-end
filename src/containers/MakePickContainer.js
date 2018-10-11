@@ -49,7 +49,7 @@ export default class MakePickContainer extends Component{
         &&
         < SubmitField currSelection={this.state.currSelection} handleYesClick={this.handleYesClick} handleNoClick={this.handleNoClick}/>
       }
-        < StockTable stocks={this.props.stocks} currSearch={this.state.currSearch} selectStock={this.selectStock} />
+        < StockTable currSearch={this.state.currSearch} selectStock={this.selectStock} />
       </React.Fragment>
     )
   }

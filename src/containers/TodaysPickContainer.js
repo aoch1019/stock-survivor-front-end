@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import MakePickContainer from './MakePickContainer'
+import { connect } from 'react-redux'
 
 export default class TodaysPickContainer extends Component{
   state = {
@@ -12,7 +13,7 @@ render(){
     <div>
       {!this.state.pickMade
     ?
-      < MakePickContainer stocks={this.props.stocks}/>
+      < MakePickContainer />
     :
     null}
     </div>

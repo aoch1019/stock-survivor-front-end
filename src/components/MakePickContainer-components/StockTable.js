@@ -1,5 +1,6 @@
 import React from 'react';
 import StockRow from './StockRow'
+import { connect } from 'react-redux'
 
 const StockTable = (props) => {
 
@@ -46,6 +47,13 @@ const StockTable = (props) => {
           </table>
     )
 
+} /* End of class */
+
+function mapStateToProps(state){
+  return {
+    currUser: state.currUser,
+    stocks: state.stocks
+  }
 }
 
-export default StockTable
+export default connect(mapStateToProps)(StockTable)

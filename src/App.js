@@ -2,53 +2,33 @@ import React, { Component } from 'react';
 import './App.css';
 import TodaysPickContainer from './containers/TodaysPickContainer'
 import LoginContainer from './containers/LoginContainer'
+import { connect } from 'react-redux'
 
 class App extends Component {
-  constructor(props){
-    super(props)
 
-    this.state = {
-      stocks: [],
-      currUser: null
-    }
-
-    this.handleLoginSubmit = this.handleLoginSubmit.bind(this)
-  }
-
-
-  async getStocks(){
+  async getStocksFromAPI(){
     const stockList = await fetch('http://localhost:3000/stocks').then(res => res.json())
-    this.setState({
-      stocks: stockList
-    })
+    this.props.getStocks(stockList)
   }
 
   componentDidMount(){
-    this.getStocks()
+    this.getStocksFromAPI()
   }
-
-  handleLoginSubmit(value, event){
-    event.preventDefault()
-    this.setState({
-      currUser: value
-    }, () => console.log(this.state.currUser))
-  }
-
 
 render() {
   return (
     <React.Fragment>
-      {this.state.currUser !== null &&
+      {this.props.currUser !== null &&
         <div>
-          Logged in as {this.state.currUser} <button onClick={() => this.setState({ currUser: null })}>Logout</button>
+          Logged in as {this.props.currUser} <button onClick={() => this.props.changeUser(null)}>Logout</button>
         </div>
       }
       <div className="App">
-        {this.state.currUser === null
+        {this.props.currUser === null
         ?
         < LoginContainer handleLoginSubmit={this.handleLoginSubmit} />
         :
-        < TodaysPickContainer stocks={this.state.stocks} />}
+        < TodaysPickContainer />}
       </div>
     </React.Fragment>
   );
@@ -57,4 +37,22 @@ render() {
 
 } /* End of class */
 
-export default App;
+function mapStateToProps(state){
+  return {
+    currUser: state.currUser,
+    stocks: state.stocks
+  }
+}
+
+function mapDispatchToProps(dispatch){
+  return {
+    getStocks: (stocks) => {
+      dispatch({type: 'GET_STOCKS', payload: stocks})
+    },
+    changeUser: (username) => {
+      dispatch({type: 'CHANGE_USER', payload: username})
+    }
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);

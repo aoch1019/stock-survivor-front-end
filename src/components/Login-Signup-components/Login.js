@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux'
 
-export default class Login extends Component{
+class Login extends Component{
   constructor(props){
     super(props)
 
@@ -21,7 +22,7 @@ export default class Login extends Component{
   render(){
     return(
       <React.Fragment>
-        <form onSubmit={(event) => this.props.handleLoginSubmit(this.state.currInput, event)} className="ui form">
+        <form onSubmit={(event) => {event.preventDefault(); this.props.changeUser(this.state.currInput)}} className="ui form">
           <div className="field">
             <label>Please Login</label>
             <input
@@ -44,4 +45,14 @@ export default class Login extends Component{
     )
   }
 
+} /* End of class */
+
+function mapDispatchToProps(dispatch){
+  return {
+    changeUser: (username) => {
+      dispatch({type: 'CHANGE_USER', payload: username})
+    }
+  }
 }
+
+export default connect(null, mapDispatchToProps)(Login)
