@@ -17,6 +17,7 @@ class SubmitField extends Component{
                                 stock_id: this.props.currStockSelection.id
                               })
                             }).then(res => res.json())
+      this.props.changeStock(this.props.currStockSelection)
       this.props.makeStockPick(pickObj)
   }
 
@@ -43,6 +44,9 @@ function mapDispatchToProps(dispatch){
   return {
     makeStockPick: (pick) => {
       dispatch({type: 'MAKE_STOCK_PICK', payload: pick})
+    },
+    changeStock: (stock) => {
+      dispatch({type: 'CHANGE_STOCK', payload: stock})
     }
   }
 }

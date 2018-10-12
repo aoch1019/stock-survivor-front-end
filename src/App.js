@@ -19,24 +19,31 @@ class App extends Component {
     this.getStocksFromAPI()
   }
 
-render() {
-  return (
-    <React.Fragment>
-      {this.props.currUser !== null &&
-        <div>
-          Logged in as {this.props.currUser.name} <button onClick={() => this.props.changeUser(null)}>Logout</button>
+  logout(){
+    this.props.changeUser(null)
+    this.props.changeEntry(null)
+    this.props.makeStockPick(null)
+    this.props.changeStock(null)
+  }
+
+  render() {
+    return (
+      <React.Fragment>
+        {this.props.currUser !== null &&
+          <div>
+            Logged in as {this.props.currUser.name} <button onClick={() => this.logout()}>Logout</button>
+          </div>
+        }
+        <div className="App">
+          {this.props.currUser === null
+          ?
+          < LoginContainer handleLoginSubmit={this.handleLoginSubmit} />
+          :
+          < TodaysPickContainer />}
         </div>
-      }
-      <div className="App">
-        {this.props.currUser === null
-        ?
-        < LoginContainer handleLoginSubmit={this.handleLoginSubmit} />
-        :
-        < TodaysPickContainer />}
-      </div>
-    </React.Fragment>
-  );
-}
+      </React.Fragment>
+    );
+  }
 
 
 } /* End of class */
@@ -55,6 +62,15 @@ function mapDispatchToProps(dispatch){
     },
     changeUser: (username) => {
       dispatch({type: 'CHANGE_USER', payload: username})
+    },
+    changeEntry: (entry) => {
+      dispatch({type: 'CHANGE_ENTRY', payload: entry})
+    },
+    makeStockPick: (pick) => {
+      dispatch({type: 'MAKE_STOCK_PICK', payload: pick})
+    },
+    changeStock: (stock) => {
+      dispatch({type: 'CHANGE_PICKED_STOCK', payload: stock})
     }
   }
 }
