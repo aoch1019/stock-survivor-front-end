@@ -15,6 +15,14 @@ class PoolTableRow extends Component {
     this.getPickFromEntry()
   }
 
+  createInterval(){
+    this.interval = setInterval(() => this.getCurrStockPrice(), 3000)
+  }
+
+  componentWillUnmount(){
+    !!this.interval && clearInterval(this.interval)
+  }
+
   async getUserFromEntry(){
     const getUser = await fetch(`http://localhost:3000/users/${this.props.entry.user_id}`).then(res => res.json())
     this.setState({
@@ -43,7 +51,7 @@ class PoolTableRow extends Component {
     const stockQuote = await fetch(`https://api.iextrading.com/1.0/stock/${this.state.stock.ticker}/book`).then(res => res.json())
     this.setState({
       currStockPrice: stockQuote.quote.extendedPrice
-    })
+    }, () => this.createInterval())
   }
 
   calculateChange(){
