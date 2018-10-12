@@ -10,26 +10,33 @@ class PoolTableRow extends Component {
     currStockPrice: null
   }
 
-  componentDidMount(){
-    this.getUserFromEntry()
-    this.getPickFromEntry()
+  async componentDidMount(){
+    const user = await this.getUserFromEntry()
+    const pick = await this.getPickFromEntry()
+    const stock = await this.getStockFromPick(pick)
+    const currPrice = await this.getCurrStockPrice(stock)
+    this.setState({
+      user: user,
+      pick: pick,
+      stock: stock,
+      currStockPrice: currPrice
+    })
+    if(!!currPrice){
+      this.createInterval()
+    }
   }
 
   createInterval(){
-    this.interval = setInterval(() => this.getCurrStockPrice(), 10000)
+    this.interval = setInterval(() => this.updateStockPrice(this.state.stock), 2000)
   }
 
   componentWillUnmount(){
-    if(!!this.interval){
-      clearInterval(this.interval)
-    }
+    clearInterval(this.interval)
   }
 
   async getUserFromEntry(){
     const getUser = await fetch(`http://localhost:3000/users/${this.props.entry.user_id}`).then(res => res.json())
-    this.setState({
-      user: getUser
-    })
+    return getUser
   }
 
   async getPickFromEntry(){
@@ -37,23 +44,33 @@ class PoolTableRow extends Component {
     const getPick = allPicks.find(pick => {
       return this.props.entry.id === pick.entry_id && pick.day === this.props.currDay
     })
-    this.setState({
-      pick: getPick
-    }, () => {!!this.state.pick && this.getStockFromPick()})
+    return getPick
   }
 
-  async getStockFromPick(){
-    const getStock = await fetch(`http://localhost:3000/stocks/${this.state.pick.stock_id}`).then(res => res.json())
-    this.setState({
-      stock: getStock
-    }, () => this.getCurrStockPrice())
+  async getStockFromPick(pick){
+    if(!!pick){
+      const getStock = await fetch(`http://localhost:3000/stocks/${pick.stock_id}`).then(res => res.json())
+      return getStock
+    }
+    return null
   }
 
-  async getCurrStockPrice(){
-    const stockQuote = await fetch(`https://api.iextrading.com/1.0/stock/${this.state.stock.ticker}/book`).then(res => res.json())
-    this.setState({
-      currStockPrice: stockQuote.quote.extendedPrice
-    }, () => this.createInterval())
+  async getCurrStockPrice(stock){
+    if(!!stock){
+      const stockQuote = await fetch(`https://api.iextrading.com/1.0/stock/${stock.ticker}/book`).then(res => res.json())
+      return stockQuote.quote.extendedPrice
+    }
+    return null
+  }
+
+  async updateStockPrice(stock){
+    if(!!stock){
+      const stockQuote = await fetch(`https://api.iextrading.com/1.0/stock/${stock.ticker}/book`).then(res => res.json())
+      this.setState({
+        currStockPrice: stockQuote.quote.extendedPrice
+      }, () => console.log(`Updated ${this.state.stock.name}!`))
+    }
+    return null
   }
 
   calculateChange(){

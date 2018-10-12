@@ -36,6 +36,10 @@ export default class Timer extends Component {
     let minsLeft = 0;
     let secsLeft = 0;
 
+    if(timeLeft < 0){
+      timeLeft += 86400
+    }
+
     if(timeLeft > 3600){
       hoursLeft = Math.floor(timeLeft / 3600)
       timeLeft = timeLeft % 3600
