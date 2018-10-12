@@ -16,11 +16,13 @@ class PoolTableRow extends Component {
   }
 
   createInterval(){
-    this.interval = setInterval(() => this.getCurrStockPrice(), 3000)
+    this.interval = setInterval(() => this.getCurrStockPrice(), 10000)
   }
 
   componentWillUnmount(){
-    !!this.interval && clearInterval(this.interval)
+    if(!!this.interval){
+      clearInterval(this.interval)
+    }
   }
 
   async getUserFromEntry(){
