@@ -39,8 +39,7 @@ class TodaysPickContainer extends Component {
         {!!this.props.currEntry
           &&
         <React.Fragment>
-          <p>user id: {this.props.currEntry.user_id}</p>
-          <p>pool id: {this.props.currEntry.pool_id}</p>
+          <p>Entry details -- user id: {this.props.currEntry.user_id} pool id: {this.props.currEntry.pool_id}</p>
           <p>{this.props.currEntry.alive && "Still alive!"}</p>
         </React.Fragment>}
 

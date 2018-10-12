@@ -20,7 +20,7 @@ class ViewPickInfo extends Component {
     const stockQuote = await fetch(`https://api.iextrading.com/1.0/stock/${this.props.currPickedStock.ticker}/book`).then(res => res.json())
     this.setState({
       currStockPrice: stockQuote.quote.extendedPrice
-    })
+    }, () => console.log(`Updated ${this.props.currPickedStock.name}`))
   }
 
   calculateChange(){
