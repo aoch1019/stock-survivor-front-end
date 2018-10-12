@@ -38,10 +38,16 @@ export default class Timer extends Component {
     }
     if(timeLeft > 60){
       minsLeft = Math.floor(timeLeft / 60)
+      if(minsLeft < 10){
+        minsLeft = '0' + minsLeft
+      }
       timeLeft = timeLeft % 60
     }
     if(timeLeft > 0){
       secsLeft = Math.floor(timeLeft)
+      if(secsLeft < 10){
+        secsLeft = '0' + secsLeft
+      }
       timeLeft = 0
     }
 
