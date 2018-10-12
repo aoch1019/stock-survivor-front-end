@@ -1,11 +1,13 @@
 import React from 'react';
 import { connect } from 'react-redux'
 import ViewPickInfo from './ViewPick-components/ViewPickInfo'
+import Timer from './ViewPick-components/Timer'
 
 const ViewPickContainer = (props) => {
 
   return(
     <React.Fragment>
+      < Timer />
       <h1>Welcome to your pick!</h1>
       <table className="ui celled striped padded table">
           <tbody>

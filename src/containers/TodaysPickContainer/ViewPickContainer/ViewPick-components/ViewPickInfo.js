@@ -9,6 +9,11 @@ class ViewPickInfo extends Component {
 
   componentDidMount(){
     this.getCurrStockPrice()
+    this.interval = setInterval(() => this.getCurrStockPrice(), 1000)
+  }
+
+  componentWillUnmount(){
+    clearInterval(this.interval)
   }
 
   async getCurrStockPrice(){
