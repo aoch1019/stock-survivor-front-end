@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import './App.css';
 import TodaysPickContainer from './containers/TodaysPickContainer/TodaysPickContainer'
 import LoginContainer from './containers/LoginContainer/LoginContainer'
+import ViewPoolContainer from './containers/ViewPoolContainer/ViewPoolContainer'
 import { connect } from 'react-redux'
 
 class App extends Component {
@@ -29,6 +30,7 @@ class App extends Component {
   render() {
     return (
       <React.Fragment>
+        < ViewPoolContainer />
         {this.props.currUser !== null &&
           <div>
             Logged in as {this.props.currUser.name} <button onClick={() => this.logout()}>Logout</button>
