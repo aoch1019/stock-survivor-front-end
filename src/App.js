@@ -4,6 +4,10 @@ import TodaysPickContainer from './containers/TodaysPickContainer/TodaysPickCont
 import LoginContainer from './containers/LoginContainer/LoginContainer'
 import ViewPoolContainer from './containers/ViewPoolContainer/ViewPoolContainer'
 import { connect } from 'react-redux'
+import NavBar from './NavBar'
+import { Route } from 'react-router-dom';
+import { withRouter } from 'react-router';
+import { NavLink } from 'react-router-dom';
 
 class App extends Component {
 
@@ -30,18 +34,59 @@ class App extends Component {
   render() {
     return (
       <React.Fragment>
-        < ViewPoolContainer />
         {this.props.currUser !== null &&
           <div>
             Logged in as {this.props.currUser.name} <button onClick={() => this.logout()}>Logout</button>
           </div>
         }
         <div className="App">
-          {this.props.currUser === null
-          ?
-          < LoginContainer handleLoginSubmit={this.handleLoginSubmit} />
-          :
-          < TodaysPickContainer />}
+          <NavBar />
+            <div className="App-body">
+              <Route
+                exact path="/Login"
+                render={ (renderProps) => {
+                  return (
+                    < LoginContainer />
+                  )
+                }}
+              />
+              <Route
+                exact path="/Todays-Pick"
+                render={ (renderProps) => {
+                  return (
+                    !!this.props.currUser
+                    ?
+                    < TodaysPickContainer />
+                    :
+                    <React.Fragment>
+                      <p>Please Login</p>
+                      <NavLink className="ui button"
+                               to="/Login">
+                               Login</NavLink>
+                    </React.Fragment>
+
+                  )
+                }}
+              />
+              <Route
+                exact path="/View-Pool"
+                render={ (renderProps) => {
+                  return (
+                    !!this.props.currUser
+                    ?
+                    < ViewPoolContainer />
+                    :
+                    <React.Fragment>
+                      <p>Please Login</p>
+                      <NavLink className="ui button"
+                               to="/Login">
+                               Login</NavLink>
+                    </React.Fragment>
+
+                  )
+                }}
+              />
+            </div>
         </div>
       </React.Fragment>
     );
@@ -77,4 +122,4 @@ function mapDispatchToProps(dispatch){
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(App);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(App));

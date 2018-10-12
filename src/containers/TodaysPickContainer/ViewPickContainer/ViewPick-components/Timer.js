@@ -19,6 +19,10 @@ export default class Timer extends Component {
     }, 1000)
   }
 
+  componentWillUnmount(){
+    clearInterval(this.interval)
+  }
+
   calculateCountdown(){
     let endTime = new Date(new Date().getFullYear(),
                            new Date().getMonth(),

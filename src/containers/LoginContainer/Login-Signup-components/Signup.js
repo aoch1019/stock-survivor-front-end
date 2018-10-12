@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux'
+import { withRouter } from 'react-router';
 
 class Signup extends Component{
   constructor(props){
@@ -19,7 +20,7 @@ class Signup extends Component{
     })
   }
 
-  async addUserToAPI(){
+  async addUserToAPIAndLogin(){
     const userList = await fetch('http://localhost:3000/users').then(res => res.json())
 
     if(!!userList.find(user => user.name === this.state.currInput)){
@@ -42,7 +43,7 @@ class Signup extends Component{
 
   render(){
     return(
-        <form onSubmit={(event) => {event.preventDefault(); this.addUserToAPI()}} className="ui form">
+        <form onSubmit={(event) => {event.preventDefault(); this.addUserToAPIAndLogin(); this.props.history.push('/Todays-Pick')}} className="ui form">
           <div className="field">
             <label>Please create your username</label>
             <input
@@ -68,4 +69,4 @@ function mapDispatchToProps(dispatch){
   }
 }
 
-export default connect(null, mapDispatchToProps)(Signup)
+export default withRouter(connect(null, mapDispatchToProps)(Signup))
