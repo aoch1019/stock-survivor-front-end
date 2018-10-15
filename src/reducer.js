@@ -9,7 +9,7 @@ const defaultState = {
   currPoolId: 1,
   currPick: null,
   currEntry: null,
-  currDay: 1,
+  currDay: 2,
   currPickedStock: null,
   currPoolEntries: null
 }

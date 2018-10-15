@@ -16,18 +16,18 @@ class ViewPickContainer extends Component {
   }
 
   validTimeToChangePick(){
-    let marketClose = new Date(new Date().getFullYear(),
-                           new Date().getMonth(),
-                           new Date().getDate(),
-                           16,
-                           0,
-                           0)
-
     let marketOpen = new Date(new Date().getFullYear(),
                            new Date().getMonth(),
                            new Date().getDate(),
                            9,
                            30,
+                           0)
+
+    let marketClose = new Date(new Date().getFullYear(),
+                           new Date().getMonth(),
+                           new Date().getDate(),
+                           16,
+                           0,
                            0)
 
     if(new Date() - marketOpen < 0 || new Date() - marketClose > 0 || new Date().getDay() === 0 || new Date().getDay() >= 5){

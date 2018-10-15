@@ -23,6 +23,55 @@ class App extends Component {
 
   componentDidMount(){
     this.getStocksFromAPI()
+    if(this.checkForMarketClose()){
+      this.updateEntryAliveStatus()
+    }
+  }
+
+  checkForMarketClose(){
+    let marketClose = new Date(new Date().getFullYear(),
+                           new Date().getMonth(),
+                           new Date().getDate(),
+                           16,
+                           0,
+                           0)
+    return new Date() === marketClose
+  }
+
+  async updateEntryAliveStatus(){
+    const aliveEntries = await fetch('http://localhost:3000/entries').then(res => res.json()).then(entries => entries.filter(entry => !!entry.alive))
+    aliveEntries.forEach(async (entry) => {
+      const latestPickForEntry = await fetch('http://localhost:3000/picks').then(res => res.json()).then(picks => picks.filter(pick => pick.entry_id === entry.id))
+                                       .then(entryPicks => {
+                                         let currDayPick = entryPicks.find(pick => pick.day === this.props.currDay)
+                                         return currDayPick
+                                       })
+      if(!latestPickForEntry){
+        this.updateEntryInAPI(entry)
+      }
+      else{
+        const getStockTicker = await fetch(`http://localhost:3000/stocks/${latestPickForEntry.stock_id}`).then(res => res.json()).then(stock => stock.ticker)
+        const getCurrPrice = await fetch(`https://api.iextrading.com/1.0/stock/${getStockTicker}/book`).then(res => res.json()).then(stockQuote => {
+                                                                                                                                return stockQuote.quote.extendedPrice
+                                                                                                                              })
+        if(getCurrPrice <= latestPickForEntry.initial_price){
+          this.updateEntryInAPI(entry)
+        }
+      }
+    })
+  }
+
+  updateEntryInAPI(entry){
+    fetch(`http://localhost:3000/entries/${entry.id}`, {
+                              headers: {
+                                'Accept': 'application/json',
+                                'Content-Type': 'application/json'
+                              },
+                              method: 'PATCH',
+                              body: JSON.stringify({
+                                ...entry, alive: false
+                              })
+                            })
   }
 
   logout(){
@@ -107,7 +156,8 @@ class App extends Component {
 function mapStateToProps(state){
   return {
     currUser: state.currUser,
-    stocks: state.stocks
+    stocks: state.stocks,
+    currDay: state.currDay
   }
 }
 
