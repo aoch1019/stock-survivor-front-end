@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import MakePickContainer from './MakePickContainer/MakePickContainer'
 import ViewPickContainer from './ViewPickContainer/ViewPickContainer'
+import EliminatedView from './EliminatedView/EliminatedView'
 import { connect } from 'react-redux'
 
 class TodaysPickContainer extends Component {
@@ -59,11 +60,16 @@ class TodaysPickContainer extends Component {
           <p>{this.props.currEntry.alive && "Still alive!"}</p>
         </React.Fragment>}
 
-        {this.props.currPick === null
-        ?
-        < MakePickContainer />
-        :
-        < ViewPickContainer />
+        {!!this.props.currEntry && !!this.props.currEntry.alive
+          ?
+            this.props.currPick === null
+            ?
+            < MakePickContainer />
+            :
+            < ViewPickContainer />
+
+          :
+          < EliminatedView />
         }
       </div>
     )
