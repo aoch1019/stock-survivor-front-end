@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router';
+import { NavLink } from 'react-router-dom';
 
 class Signup extends Component{
   constructor(props){
@@ -32,7 +33,7 @@ class Signup extends Component{
                                 'Accept': 'application/json',
                                 'Content-Type': 'application/json'
                               },
-                              method: 'POST',
+                              method: 'PUT',
                               body: JSON.stringify({
                                 name: this.state.currInput
                               })
@@ -43,23 +44,42 @@ class Signup extends Component{
 
   render(){
     return(
-        <form onSubmit={(event) => {event.preventDefault(); this.addUserToAPIAndLogin(); this.props.history.push('/Todays-Pick')}} className="ui form">
-          <div className="field">
-            <label>Please create your username</label>
-            <input
-              placeholder="Username"
-              type="text"
-              value={this.state.currInput}
-              onChange={this.handleChange}
-            />
+      <React.Fragment>
+        {this.props.poolInProgress
+        ?
+          <div>
+            Competition is already in progress - We'll notify you when a new pool has begun!
+            <br></br>
+            <NavLink className="ui button"
+                     to="/View-Pool">
+                     View Current Pool</NavLink>
           </div>
-            <input  type='submit'
-                    className="ui submit button" />
-        </form>
+        :
+          <form onSubmit={(event) => {event.preventDefault(); this.addUserToAPIAndLogin(); this.props.history.push('/Todays-Pick')}} className="ui form">
+            <div className="field">
+              <label>Please create your username</label>
+              <input
+                placeholder="Username"
+                type="text"
+                value={this.state.currInput}
+                onChange={this.handleChange}
+              />
+            </div>
+              <input  type='submit'
+                      className="ui submit button" />
+          </form>
+        }
+      </React.Fragment>
     )
   }
 
 } /* End of class */
+
+function mapStateToProps(state){
+  return {
+    poolInProgress: state.poolInProgress
+  }
+}
 
 function mapDispatchToProps(dispatch){
   return {
@@ -69,4 +89,4 @@ function mapDispatchToProps(dispatch){
   }
 }
 
-export default withRouter(connect(null, mapDispatchToProps)(Signup))
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Signup))

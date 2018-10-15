@@ -131,17 +131,7 @@ class App extends Component {
                 exact path="/View-Pool"
                 render={ (renderProps) => {
                   return (
-                    !!this.props.currUser
-                    ?
                     < ViewPoolContainer />
-                    :
-                    <React.Fragment>
-                      <p>Please Login</p>
-                      <NavLink className="ui button"
-                               to="/Login">
-                               Login</NavLink>
-                    </React.Fragment>
-
                   )
                 }}
               />

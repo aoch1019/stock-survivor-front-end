@@ -7,12 +7,13 @@ const NavBar = (props) => {
     props.currUser ?
       <div className="ui two item menu" >
         <NavLink className="item" to="/Todays-Pick" >Today's Pick</NavLink>
-        <NavLink className="active item" to="/View-Pool" >View Pool</NavLink>        
+        <NavLink className="active item" to="/View-Pool" >View Pool</NavLink>
       </div>
       :
-      <div className="ui two item menu" >
+      <div className="ui three item menu" >
         <NavLink className="active item" to="/Login" >Login</NavLink>
         <NavLink className="item" to="/Signup" >Signup</NavLink>
+        <NavLink className="item" to="/View-Pool" >View Pool</NavLink>
       </div>
     )
 

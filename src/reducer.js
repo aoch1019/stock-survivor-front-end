@@ -1,17 +1,13 @@
 const defaultState = {
   stocks: [],
-  currUser:   {
-    "id": 1,
-    "name": "Andrew",
-    "created_at": "2018-10-10T16:29:02.482Z",
-    "updated_at": "2018-10-10T16:29:02.482Z"
-  },
+  currUser: null,
   currPoolId: 1,
   currPick: null,
   currEntry: null,
   currDay: 2,
   currPickedStock: null,
-  currPoolEntries: null
+  currPoolEntries: null,
+  poolInProgress: true
 }
 
 function reducer(state = defaultState, action){
