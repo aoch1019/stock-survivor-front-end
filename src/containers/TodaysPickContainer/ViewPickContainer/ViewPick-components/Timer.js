@@ -33,8 +33,8 @@ export default class Timer extends Component {
 
     let timeLeft = (endTime - new Date()) / 1000
     let hoursLeft = 0;
-    let minsLeft = 0;
-    let secsLeft = 0;
+    let minsLeft = `00`;
+    let secsLeft = `00`;
 
     if(timeLeft < 0){
       timeLeft += 86400
