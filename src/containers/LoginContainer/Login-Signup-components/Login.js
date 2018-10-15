@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router';
+import { NavLink } from 'react-router-dom';
 
 class Login extends Component{
   constructor(props){
@@ -46,7 +47,9 @@ class Login extends Component{
         <div>
           Don't have an account?
           <br></br>
-          <button className="tiny ui button" onClick={this.props.changeToSignup}>Sign up here!</button>
+            <NavLink className="ui button"
+                     to="/Signup">
+                     Signup here!</NavLink>
         </div>
       </React.Fragment>
     )

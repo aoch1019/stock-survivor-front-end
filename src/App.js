@@ -8,6 +8,7 @@ import NavBar from './NavBar'
 import { Route } from 'react-router-dom';
 import { withRouter } from 'react-router';
 import { NavLink } from 'react-router-dom';
+import Signup from './containers/LoginContainer/Login-Signup-components/Signup'
 
 class App extends Component {
 
@@ -47,6 +48,14 @@ class App extends Component {
                 render={ (renderProps) => {
                   return (
                     < LoginContainer />
+                  )
+                }}
+              />
+              <Route
+                exact path="/Signup"
+                render={ (renderProps) => {
+                  return (
+                    < Signup />
                   )
                 }}
               />

@@ -1,6 +1,11 @@
 const defaultState = {
   stocks: [],
-  currUser: null,
+  currUser:   {
+    "id": 1,
+    "name": "Andrew",
+    "created_at": "2018-10-10T16:29:02.482Z",
+    "updated_at": "2018-10-10T16:29:02.482Z"
+  },
   currPoolId: 1,
   currPick: null,
   currEntry: null,

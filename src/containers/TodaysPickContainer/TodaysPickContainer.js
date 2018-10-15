@@ -15,6 +15,7 @@ class TodaysPickContainer extends Component {
 
     if(!!locateEntry){
       this.props.changeEntry(locateEntry)
+      this.locatePick()
     }
     else{
       const entryObj = await fetch(`http://localhost:3000/entries`, {
@@ -31,6 +32,21 @@ class TodaysPickContainer extends Component {
                               }).then(res => res.json())
         this.props.changeEntry(entryObj)
     }
+  }
+
+  async locatePick(){
+    const pickList = await fetch('http://localhost:3000/picks').then(res => res.json())
+    const locatePick = pickList.find(pick => (pick.day === this.props.currDay && pick.entry_id === this.props.currEntry.id))
+
+    if(!!locatePick){
+      this.locateCurrStockFromIdAndChangePick(locatePick)
+    }
+  }
+
+  async locateCurrStockFromIdAndChangePick(pick){
+    const currStock = await fetch(`http://localhost:3000/stocks/${pick.stock_id}`).then(res => res.json())
+    this.props.changeStock(currStock)
+    this.props.changePick(pick)
   }
 
   render(){
@@ -60,7 +76,9 @@ function mapStateToProps(state){
     currPick: state.currPick,
     currUser: state.currUser,
     currPoolId: state.currPoolId,
-    currEntry: state.currEntry
+    currEntry: state.currEntry,
+    currDay: state.currDay,
+    currPickedStock: state.currPickedStock
   }
 }
 
@@ -68,6 +86,12 @@ function mapDispatchToProps(dispatch){
   return {
     changeEntry: (entry) => {
       dispatch({type: 'CHANGE_ENTRY', payload: entry})
+    },
+    changePick: (pick) => {
+      dispatch({type: 'MAKE_STOCK_PICK', payload: pick})
+    },
+    changeStock: (stock) => {
+      dispatch({type: 'CHANGE_STOCK', payload: stock})
     }
   }
 }

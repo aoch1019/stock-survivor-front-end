@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PoolTable from './ViewPool-components/PoolTable'
 import { connect } from 'react-redux'
+import Timer from '../TodaysPickContainer/ViewPickContainer/ViewPick-components/Timer'
 
 class ViewPoolContainer extends Component {
 
@@ -16,9 +17,12 @@ class ViewPoolContainer extends Component {
 
   render(){
     return(
-      <div>
-        < PoolTable />
-      </div>
+      <React.Fragment>
+        < Timer />
+        <div>
+          < PoolTable />
+        </div>
+      </React.Fragment>
     )
   }
 
