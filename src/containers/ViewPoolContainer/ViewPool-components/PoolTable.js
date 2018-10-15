@@ -41,7 +41,12 @@ const PoolTable = (props) => {
             </tr>
 
           {!!props.currPoolEntries && props.currPoolEntries.map((entry, idx) => {
-            return < PoolTableRow key={idx} entry={entry} />
+            if(!!entry.alive){
+              return < PoolTableRow key={idx} entry={entry} />
+            }
+            else{
+              return null
+            }
           })}
 
           </tbody>

@@ -15,9 +15,14 @@ class ViewPoolContainer extends Component {
     this.props.setCurrPoolEntries(currPoolEntries)
   }
 
+  entriesStillAlive(){
+    return this.props.currPoolEntries.filter(entry => !!entry.alive).length
+  }
+
   render(){
     return(
       <React.Fragment>
+        {!!this.props.currPoolEntries && `${this.entriesStillAlive()} of ${this.props.currPoolEntries.length} entries left`}
         < Timer />
         <div>
           < PoolTable />
@@ -31,7 +36,8 @@ class ViewPoolContainer extends Component {
 
 function mapStateToProps(state){
   return {
-    currPoolId: state.currPoolId
+    currPoolId: state.currPoolId,
+    currPoolEntries: state.currPoolEntries
   }
 }
 
