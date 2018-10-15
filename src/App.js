@@ -23,7 +23,6 @@ class App extends Component {
 
   componentDidMount(){
     this.getStocksFromAPI()
-    this.updateEntryAliveStatus()
     if(this.checkForMarketClose()){
       this.updateEntryAliveStatus()
     }

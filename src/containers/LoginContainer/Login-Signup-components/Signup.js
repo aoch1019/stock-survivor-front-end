@@ -33,7 +33,7 @@ class Signup extends Component{
                                 'Accept': 'application/json',
                                 'Content-Type': 'application/json'
                               },
-                              method: 'PUT',
+                              method: 'POST',
                               body: JSON.stringify({
                                 name: this.state.currInput
                               })
