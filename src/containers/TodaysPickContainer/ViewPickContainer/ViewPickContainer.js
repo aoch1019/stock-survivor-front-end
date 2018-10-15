@@ -15,6 +15,29 @@ class ViewPickContainer extends Component {
     })
   }
 
+  validTimeToChangePick(){
+    let marketClose = new Date(new Date().getFullYear(),
+                           new Date().getMonth(),
+                           new Date().getDate(),
+                           16,
+                           0,
+                           0)
+
+    let marketOpen = new Date(new Date().getFullYear(),
+                           new Date().getMonth(),
+                           new Date().getDate(),
+                           9,
+                           30,
+                           0)
+
+    if(new Date() - marketOpen < 0 || new Date() - marketClose > 0 || new Date().getDay() === 0 || new Date().getDay() >= 5){
+      return true
+    }
+    else{
+      return false
+    }
+  }
+
   render(){
     return(
       <React.Fragment>
@@ -59,7 +82,9 @@ class ViewPickContainer extends Component {
 
             </tbody>
           </table>
+          {!!this.validTimeToChangePick() &&
           <button className="ui button" onClick={() => {this.deletePickFromAPI(); this.props.changePick(null)}}>Change Pick</button>
+          }
         </React.Fragment>
     )
   }
