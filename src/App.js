@@ -35,7 +35,7 @@ class App extends Component {
                            16,
                            0,
                            0)
-    return new Date() === marketClose
+    return (new Date() === marketClose && new Date().getDay() !== 0 && new Date().getDay() < 5)
   }
 
   async updateEntryAliveStatus(){
