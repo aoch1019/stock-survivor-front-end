@@ -39,6 +39,7 @@ class StockViewContainer extends Component {
           <img src={this.state.logo} alt=""></img>
         </div>
         < StockChart />
+      <h2>Recent News:</h2>
         < NewsFeed />
       </React.Fragment>
     )
