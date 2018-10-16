@@ -18,21 +18,6 @@ class TodaysPickContainer extends Component {
       this.props.changeEntry(locateEntry)
       this.locatePick()
     }
-    else{
-      const entryObj = await fetch(`http://localhost:3000/entries`, {
-                                headers: {
-                                  'Accept': 'application/json',
-                                  'Content-Type': 'application/json'
-                                },
-                                method: 'POST',
-                                body: JSON.stringify({
-                                  alive: true,
-                                  pool_id: this.props.currPoolId,
-                                  user_id: this.props.currUser.id
-                                })
-                              }).then(res => res.json())
-        this.props.changeEntry(entryObj)
-    }
   }
 
   async locatePick(){
@@ -60,16 +45,16 @@ class TodaysPickContainer extends Component {
           <p>{this.props.currEntry.alive && "Still alive!"}</p>
         </React.Fragment>}
 
-        {!!this.props.currEntry && !!this.props.currEntry.alive
+        {this.props.currPick !== null
           ?
-            this.props.currPick === null
+            !!this.props.currEntry.alive
             ?
-            < MakePickContainer />
-            :
             < ViewPickContainer />
+            :
+            < EliminatedView />
 
           :
-          < EliminatedView />
+          < MakePickContainer />
         }
       </div>
     )
