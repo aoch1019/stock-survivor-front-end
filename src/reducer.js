@@ -28,7 +28,7 @@ function reducer(state = defaultState, action){
     case "CHANGE_DAY":
       return {...state, currDay: action.payload}
     case "CHANGE_STOCK_TO_VIEW":
-      return {...state, stockToView: action.payload}      
+      return {...state, stockToView: action.payload}
     default:
       return state
   }
