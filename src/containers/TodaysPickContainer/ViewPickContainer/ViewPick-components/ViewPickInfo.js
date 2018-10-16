@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux'
+import { Link } from 'react-router-dom'
 
 class ViewPickInfo extends Component {
 
@@ -32,7 +33,7 @@ class ViewPickInfo extends Component {
   render(){
     return(
       <tr>
-        <th> {this.props.currPickedStock.name} </th>
+        <th> <Link to="/View-Stock" onClick={() => this.props.changeStockToView(this.props.currPickedStock.ticker)}>{this.props.currPickedStock.name}</Link></th>
         <th> {this.props.currPickedStock.ticker} </th>
         <th> {this.props.currPickedStock.industry} </th>
         <th> {this.props.currPick.initial_price} </th>
@@ -51,4 +52,12 @@ function mapStateToProps(state){
   }
 }
 
-export default connect(mapStateToProps)(ViewPickInfo)
+function mapDispatchToProps(dispatch){
+  return {
+    changeStockToView: (ticker) => {
+      dispatch({type: 'CHANGE_STOCK_TO_VIEW', payload: ticker})
+    }
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(ViewPickInfo)
