@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux'
+import { Link } from 'react-router-dom'
 
 class PoolTableRow extends Component {
 
@@ -85,7 +86,7 @@ class PoolTableRow extends Component {
         {!!this.state.pick && !!this.state.user && !!this.state.stock &&
           <tr>
             <th> {this.state.user.name} </th>
-            <th> {this.state.stock.name} </th>
+            <th> <Link to="/View-Stock" onClick={() => this.props.changeStockToView(this.state.stock.ticker)}>{this.state.stock.name}</Link></th>
             <th> {this.state.stock.ticker} </th>
             <th> {this.state.pick.initial_price} </th>
             <th> {this.state.currStockPrice} </th>
@@ -104,4 +105,12 @@ function mapStateToProps(state){
   }
 }
 
-export default connect(mapStateToProps)(PoolTableRow)
+function mapDispatchToProps(dispatch){
+  return {
+    changeStockToView: (ticker) => {
+      dispatch({type: 'CHANGE_STOCK_TO_VIEW', payload: ticker})
+    }
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(PoolTableRow)
