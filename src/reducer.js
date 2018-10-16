@@ -4,7 +4,7 @@ const defaultState = {
   currPoolId: 2,
   currPick: null,
   currEntry: null,
-  currDay: 2,
+  currDay: 3,
   currPickedStock: null,
   currPoolEntries: null,
   poolInProgress: false,

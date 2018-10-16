@@ -24,20 +24,32 @@ class App extends Component {
 
   componentDidMount(){
     this.getStocksFromAPI()
-    if(this.checkForMarketClose()){
-      this.updateEntryAliveStatus()
-      this.props.incrementDay(this.props.currDay + 1)
-    }
+    this.createInterval()
+  }
+
+  componentWillUnmount(){
+    clearInterval(this.interval)
+  }
+
+  createInterval(){
+    this.interval = setInterval(() => this.checkForMarketClose(), 1000)
   }
 
   checkForMarketClose(){
-    let marketClose = new Date(new Date().getFullYear(),
+    const marketClose = new Date(new Date().getFullYear(),
                            new Date().getMonth(),
                            new Date().getDate(),
-                           16,
-                           0,
+                           17,
+                           4,
                            0)
-    return (new Date() === marketClose && new Date().getDay() !== 0 && new Date().getDay() < 5)
+    if(new Date().getHours() === marketClose.getHours() &&
+       new Date().getMinutes() === marketClose.getMinutes() &&
+       new Date().getSeconds() === marketClose.getSeconds() &&
+       new Date().getDay() !== 0 &&
+       new Date().getDay() < 5){
+      this.updateEntryAliveStatus()
+      this.props.incrementDay(this.props.currDay + 1)
+    }
   }
 
   async updateEntryAliveStatus(){
