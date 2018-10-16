@@ -70,7 +70,7 @@ export default class Timer extends Component {
   render(){
     return(
       <div>
-        <h3>Time Remaining {this.state.hours}:{this.state.mins}:{this.state.secs}</h3>
+        <h3>{this.state.hours}:{this.state.mins}:{this.state.secs} until market closes!</h3>
       </div>
     )
   }
