@@ -1,0 +1,94 @@
+import React, { Component } from 'react';
+import { Line } from 'react-chartjs-2';
+import { connect } from 'react-redux'
+import { withRouter } from 'react-router';
+
+
+class StockChart extends Component {
+  constructor(props){
+    super(props)
+
+    this.state = {
+      chartData: {labels: [],
+      datasets: [{
+        label: `Chart for ${this.props.stockToView}`,
+        data: [],
+        backgroundColor: [
+          'rgba(255, 99, 132, 0.2)',
+          'rgba(54, 162, 235, 0.2)',
+          'rgba(255, 206, 86, 0.2)',
+          'rgba(75, 192, 192, 0.2)',
+          'rgba(153, 102, 255, 0.2)',
+          'rgba(255, 159, 64, 0.2)'
+        ],
+        borderColor: [
+          'rgba(255,99,132,1)',
+          'rgba(54, 162, 235, 1)',
+          'rgba(255, 206, 86, 1)',
+          'rgba(75, 192, 192, 1)',
+          'rgba(153, 102, 255, 1)',
+          'rgba(255, 159, 64, 1)'
+        ],
+        borderWidth: 1
+      }]
+    }
+
+    }
+
+  }
+
+  componentDidMount(){
+    if(!!this.props.stockToView){
+      this.getDataFromAPI()
+    }
+    else if(!!this.props.currUser){
+      this.props.history.push('/View-Pool')
+    }
+    else {
+      this.props.history.push('/Login')
+    }
+  }
+
+  getDataFromAPI(){
+    fetch(`https://api.iextrading.com/1.0/stock/${this.props.stockToView}/chart/6m`).then(res => res.json())
+      .then(APIhash => {
+        const dataset = this.state.chartData
+        APIhash.forEach(dailyQuote => {
+          const closePrice = dailyQuote.close
+          const date = dailyQuote.date
+          dataset.labels.push(date)
+          dataset['datasets'][0].data.push(closePrice)
+        })
+        this.setState({ chartData: dataset })
+      })
+  }
+
+  render(){
+    return(
+        <div className="chart">
+        < Line
+                data = {this.state.chartData}
+                options = {{
+                  scales: {
+                    yAxes: [{
+                      ticks: {
+                        beginAtZero:true
+                      }
+                    }]
+                  }
+                }}
+           />
+        </div>
+    )
+  }
+
+} /* End of class */
+
+function mapStateToProps(state){
+  return {
+    stockToView: state.stockToView,
+    currUser: state.currUser
+  }
+}
+
+export default withRouter(connect(mapStateToProps)(StockChart))
