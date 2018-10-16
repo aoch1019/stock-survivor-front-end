@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 import { Line } from 'react-chartjs-2';
 import { connect } from 'react-redux'
-import { withRouter } from 'react-router';
+
 
 
 class StockChart extends Component {
+
   constructor(props){
     super(props)
 
@@ -31,8 +32,7 @@ class StockChart extends Component {
         ],
         borderWidth: 1
       }]
-    }
-
+      }
     }
 
   }
@@ -40,12 +40,6 @@ class StockChart extends Component {
   componentDidMount(){
     if(!!this.props.stockToView){
       this.getDataFromAPI()
-    }
-    else if(!!this.props.currUser){
-      this.props.history.push('/View-Pool')
-    }
-    else {
-      this.props.history.push('/Login')
     }
   }
 
@@ -86,9 +80,8 @@ class StockChart extends Component {
 
 function mapStateToProps(state){
   return {
-    stockToView: state.stockToView,
-    currUser: state.currUser
+    stockToView: state.stockToView
   }
 }
 
-export default withRouter(connect(mapStateToProps)(StockChart))
+export default connect(mapStateToProps)(StockChart)
