@@ -1,10 +1,13 @@
 import React from 'react';
+import { connect } from 'react-redux'
+import { Link } from 'react-router-dom'
+import StockViewContainer from '../../../StockViewContainer/StockViewContainer'
 
 const StockRow = (props) => {
 
   return(
     <tr>
-      <th> {props.stockInfo.name} </th>
+      <th> <Link to="/View-Stock" onClick={() => props.changeStockToView(props.stockInfo.ticker)}>{props.stockInfo.name}</Link></th>
       <th> {props.stockInfo.ticker} </th>
       <th> {props.stockInfo.industry} </th>
       <th> {props.stockInfo.closing_price} </th>
@@ -14,4 +17,12 @@ const StockRow = (props) => {
 
 }
 
-export default StockRow
+function mapDispatchToProps(dispatch){
+  return {
+    changeStockToView: (ticker) => {
+      dispatch({type: 'CHANGE_STOCK_TO_VIEW', payload: ticker})
+    }
+  }
+}
+
+export default connect(null, mapDispatchToProps)(StockRow)

@@ -9,6 +9,7 @@ import { Route } from 'react-router-dom';
 import { withRouter } from 'react-router';
 import { NavLink } from 'react-router-dom';
 import Signup from './containers/LoginContainer/Login-Signup-components/Signup'
+import StockViewContainer from './containers/StockViewContainer/StockViewContainer'
 
 class App extends Component {
 
@@ -25,6 +26,7 @@ class App extends Component {
     this.getStocksFromAPI()
     if(this.checkForMarketClose()){
       this.updateEntryAliveStatus()
+      this.props.incrementDay(this.props.currDay + 1)
     }
   }
 
@@ -134,6 +136,14 @@ class App extends Component {
                   )
                 }}
               />
+              <Route
+                exact path="/View-Stock"
+                render={ (renderProps) => {
+                  return (
+                    < StockViewContainer />
+                  )
+                }}
+              />
             </div>
         </div>
       </React.Fragment>
@@ -167,6 +177,9 @@ function mapDispatchToProps(dispatch){
     },
     changeStock: (stock) => {
       dispatch({type: 'CHANGE_PICKED_STOCK', payload: stock})
+    },
+    incrementDay: (day) => {
+      dispatch({type: 'CHANGE_DAY', payload: day})
     }
   }
 }

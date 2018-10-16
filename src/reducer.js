@@ -7,7 +7,8 @@ const defaultState = {
   currDay: 2,
   currPickedStock: null,
   currPoolEntries: null,
-  poolInProgress: false
+  poolInProgress: false,
+  stockToView: null
 }
 
 function reducer(state = defaultState, action){
@@ -24,6 +25,10 @@ function reducer(state = defaultState, action){
       return {...state, currPickedStock: action.payload}
     case "CHANGE_POOL_ENTRIES":
       return {...state, currPoolEntries: action.payload}
+    case "CHANGE_DAY":
+      return {...state, currDay: action.payload}
+    case "CHANGE_STOCK_TO_VIEW":
+      return {...state, stockToView: action.payload}      
     default:
       return state
   }
