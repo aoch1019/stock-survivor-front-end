@@ -66,6 +66,7 @@ class App extends Component {
        new Date().getSeconds() === marketClose.getSeconds() &&
        new Date().getDay() !== 0 &&
        new Date().getDay() < 5){
+      this.props.incrementDay(this.props.currDay + 1)
       this.updateEntryAliveStatus()
     }
   }
@@ -75,7 +76,7 @@ class App extends Component {
     aliveEntriesForCurrPool.forEach(async (entry) => {
       const latestPickForEntry = await fetch('http://localhost:3000/picks').then(res => res.json()).then(picks => picks.filter(pick => pick.entry_id === entry.id))
                                        .then(entryPicks => {
-                                         let currDayPick = entryPicks.find(pick => pick.day === this.props.currDay)
+                                         let currDayPick = entryPicks.find(pick => pick.day === this.props.currDay - 1)
                                          return currDayPick
                                        })
       if(!latestPickForEntry){
@@ -95,7 +96,6 @@ class App extends Component {
         }
       }
     })
-    // this.props.incrementDay(this.props.currDay + 1)
   }
 
   updateEntryInAPI(entry){
@@ -118,9 +118,15 @@ class App extends Component {
     this.props.changeStock(null)
   }
 
+  goToNextDay(){
+    this.props.incrementDay(this.props.currDay + 1)
+    this.updateEntryAliveStatus()
+  }
+
   render() {
     return (
       <React.Fragment>
+        <button onClick={() => this.goToNextDay()}>Next Day!</button>
         {this.props.currUser !== null &&
           <div>
             Logged in as {this.props.currUser.name} <button onClick={() => this.logout()}>Logout</button>

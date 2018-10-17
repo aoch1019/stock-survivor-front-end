@@ -52,7 +52,7 @@ class TodaysPickContainer extends Component {
           ?
             !!this.props.currEntry.alive
             ?
-              !!this.props.currPick
+              !!this.props.currPick && this.props.currPick.day === this.props.currDay
               ?
               < ViewPickContainer />
               :

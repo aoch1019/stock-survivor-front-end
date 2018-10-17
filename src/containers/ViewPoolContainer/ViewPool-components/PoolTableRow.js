@@ -83,7 +83,8 @@ class PoolTableRow extends Component {
   render(){
     return(
       <React.Fragment>
-        {!!this.state.pick && !!this.state.user && !!this.state.stock &&
+        {!!this.state.pick && !!this.state.user && !!this.state.stock
+          ?
           <tr>
             <th> {this.state.user.name} </th>
             <th> <Link to="/View-Stock" onClick={() => this.props.changeStockToView(this.state.stock.ticker)}>{this.state.stock.name}</Link></th>
@@ -91,6 +92,16 @@ class PoolTableRow extends Component {
             <th> {this.state.pick.initial_price} </th>
             <th> {this.state.currStockPrice} </th>
             <th> {this.calculateChange()} </th>
+          </tr>
+          :
+          !!this.state.user &&
+          <tr>
+            <th> {this.state.user.name} </th>
+            <th> TBD </th>
+            <th> TBD </th>
+            <th> TBD </th>
+            <th> TBD </th>
+            <th> TBD </th>
           </tr>
         }
         </React.Fragment>

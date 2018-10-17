@@ -10,30 +10,29 @@ class ViewPickContainer extends Component {
     this.props.changeStockToView(this.props.currPickedStock.ticker)
   }
 
-  deleteAndChangePick(){
-    fetch(`http://localhost:3000/picks/${this.props.currPick.id}`, {
-      method: 'DELETE',
-      headers:{
-        'Accept': 'application/json',
-        'Content-Type': 'application/json'
-      }
-    })
-     this.props.changePick(null);
-  }
+  // deleteAndChangePick(){
+  //   fetch(`http://localhost:3000/picks/${this.props.currPick.id}`, {
+  //     method: 'DELETE',
+  //     headers:{
+  //       'Accept': 'application/json',
+  //       'Content-Type': 'application/json'
+  //     }
+  //   })
+  //    this.props.changePick(null);
+  // }
 
-  deleteAndChangeEntry(){
-    if(this.props.currDay === 1){
-      debugger
-      fetch(`http://localhost:3000/entries/${this.props.currEntry.id}`, {
-        method: 'DELETE',
-        headers:{
-          'Accept': 'application/json',
-          'Content-Type': 'application/json'
-        }
-      })
-      this.props.changeEntry(null)
-    }
-  }
+  // deleteAndChangeEntry(){
+  //   if(this.props.currDay === 1){
+  //     fetch(`http://localhost:3000/entries/${this.props.currEntry.id}`, {
+  //       method: 'DELETE',
+  //       headers:{
+  //         'Accept': 'application/json',
+  //         'Content-Type': 'application/json'
+  //       }
+  //     })
+  //     this.props.changeEntry(null)
+  //   }
+  // }
 
   validTimeToChangePick(){
     let marketOpen = new Date(new Date().getFullYear(),
@@ -102,9 +101,12 @@ class ViewPickContainer extends Component {
 
             </tbody>
           </table>
+
+          {/*
           {!!this.validTimeToChangePick() &&
           <button className="ui button" onClick={() => {this.deleteAndChangePick(); this.deleteAndChangeEntry()}}>Change Pick</button>
           }
+          */}
 
         < StockChart timeframe='1d'/>
 

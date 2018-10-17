@@ -41,8 +41,27 @@ class SubmitField extends Component{
         this.createPick(entryObj, true)
       }
       else{
-        this.createPick(this.props.currEntry, false)
+        let isRepeat = await this.checkForRepeat()
+        if(!!isRepeat){
+          alert(`You already picked ${this.props.currStockSelection.name}! Please pick again.`)
+        }
+        else{
+          this.createPick(this.props.currEntry, false)
+        }
       }
+  }
+
+  async checkForRepeat(){
+    let status = false
+    const pickList = await fetch(`http://localhost:3000/picks`).then(res => res.json())
+    pickList.forEach(pick => {
+      console.log(this.props.currEntry.id)
+      console.log(this.props.currStockSelection.id)
+      if(pick.entry_id === this.props.currEntry.id && pick.stock_id === this.props.currStockSelection.id){
+        status = true
+      }
+    })
+    return status
   }
 
   render(){
