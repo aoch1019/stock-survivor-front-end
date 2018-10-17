@@ -39,8 +39,17 @@ class StockChart extends Component {
   }
 
   componentDidMount(){
-    if(!!this.props.stockToView){
-      this.getDataFromAPI()
+    if(!!this.props.timeframe){
+      this.setState({ timeframe: this.props.timeframe }, () => {
+        if(!!this.props.stockToView){
+          this.getDataFromAPI()
+        }
+      })
+    }
+    else{
+      if(!!this.props.stockToView){
+        this.getDataFromAPI()
+      }
     }
   }
 

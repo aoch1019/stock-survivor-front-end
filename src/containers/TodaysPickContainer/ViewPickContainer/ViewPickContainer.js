@@ -2,8 +2,13 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux'
 import ViewPickInfo from './ViewPick-components/ViewPickInfo'
 import Timer from './ViewPick-components/Timer'
+import StockChart from '../../../containers/StockViewContainer/StockView-components/StockChart'
 
 class ViewPickContainer extends Component {
+
+  componentDidMount(){
+    this.props.changeStockToView(this.props.currPickedStock.ticker)
+  }
 
   deleteAndChangePick(){
     fetch(`http://localhost:3000/picks/${this.props.currPick.id}`, {
@@ -100,6 +105,9 @@ class ViewPickContainer extends Component {
           {!!this.validTimeToChangePick() &&
           <button className="ui button" onClick={() => {this.deleteAndChangePick(); this.deleteAndChangeEntry()}}>Change Pick</button>
           }
+
+        < StockChart timeframe='1d'/>
+
         </React.Fragment>
     )
   }
@@ -121,6 +129,9 @@ function mapDispatchToProps(dispatch){
     },
     changeEntry: (entry) => {
       dispatch({type: 'CHANGE_ENTRY', payload: entry})
+    },
+    changeStockToView: (ticker) => {
+      dispatch({type: 'CHANGE_STOCK_TO_VIEW', payload: ticker})
     }
   }
 }
