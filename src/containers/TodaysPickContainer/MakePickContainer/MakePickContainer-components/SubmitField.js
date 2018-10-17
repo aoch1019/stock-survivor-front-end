@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 
 class SubmitField extends Component{
 
-  async createPick(){
+  async createPick(entry, newEntry){
     const pickObj = await fetch(`http://localhost:3000/picks`, {
                               headers: {
                                 'Accept': 'application/json',
@@ -13,29 +13,36 @@ class SubmitField extends Component{
                               body: JSON.stringify({
                                 initial_price: this.props.currStockSelection.closing_price,
                                 day: this.props.currDay,
-                                entry_id: this.props.currEntry.id,
+                                entry_id: entry.id,
                                 stock_id: this.props.currStockSelection.id
                               })
                             }).then(res => res.json())
       this.props.changeStock(this.props.currStockSelection)
       this.props.makeStockPick(pickObj)
+      if(!!newEntry){
+        this.props.changeEntry(entry)
+      }
   }
 
   async createEntryAndPick(){
-    const entryObj = await fetch(`http://localhost:3000/entries`, {
-                              headers: {
-                                'Accept': 'application/json',
-                                'Content-Type': 'application/json'
-                              },
-                              method: 'POST',
-                              body: JSON.stringify({
-                                alive: true,
-                                pool_id: this.props.currPoolId,
-                                user_id: this.props.currUser.id
-                              })
-                            }).then(res => res.json())
-      this.props.changeEntry(entryObj)
-      this.createPick()
+    if(this.props.currDay === 1){
+      const entryObj = await fetch(`http://localhost:3000/entries`, {
+                                headers: {
+                                  'Accept': 'application/json',
+                                  'Content-Type': 'application/json'
+                                },
+                                method: 'POST',
+                                body: JSON.stringify({
+                                  alive: true,
+                                  pool_id: this.props.currPoolId,
+                                  user_id: this.props.currUser.id
+                                })
+                              }).then(res => res.json())
+        this.createPick(entryObj, true)
+      }
+      else{
+        this.createPick(this.props.currEntry, false)
+      }
   }
 
   render(){

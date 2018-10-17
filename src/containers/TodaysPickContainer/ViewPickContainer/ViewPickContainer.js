@@ -5,7 +5,7 @@ import Timer from './ViewPick-components/Timer'
 
 class ViewPickContainer extends Component {
 
-  deletePickFromAPI(){
+  deleteAndChangePick(){
     fetch(`http://localhost:3000/picks/${this.props.currPick.id}`, {
       method: 'DELETE',
       headers:{
@@ -13,6 +13,21 @@ class ViewPickContainer extends Component {
         'Content-Type': 'application/json'
       }
     })
+     this.props.changePick(null);
+  }
+
+  deleteAndChangeEntry(){
+    if(this.props.currDay === 1){
+      debugger
+      fetch(`http://localhost:3000/entries/${this.props.currEntry.id}`, {
+        method: 'DELETE',
+        headers:{
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        }
+      })
+      this.props.changeEntry(null)
+    }
   }
 
   validTimeToChangePick(){
@@ -83,7 +98,7 @@ class ViewPickContainer extends Component {
             </tbody>
           </table>
           {!!this.validTimeToChangePick() &&
-          <button className="ui button" onClick={() => {this.deletePickFromAPI(); this.props.changePick(null)}}>Change Pick</button>
+          <button className="ui button" onClick={() => {this.deleteAndChangePick(); this.deleteAndChangeEntry()}}>Change Pick</button>
           }
         </React.Fragment>
     )
@@ -93,7 +108,9 @@ class ViewPickContainer extends Component {
 function mapStateToProps(state){
   return {
     currPick: state.currPick,
-    currPickedStock: state.currPickedStock
+    currPickedStock: state.currPickedStock,
+    currDay: state.currDay,
+    currEntry: state.currEntry
   }
 }
 
@@ -101,6 +118,9 @@ function mapDispatchToProps(dispatch){
   return {
     changePick: (pick) => {
       dispatch({type: 'MAKE_STOCK_PICK', payload: pick})
+    },
+    changeEntry: (entry) => {
+      dispatch({type: 'CHANGE_ENTRY', payload: entry})
     }
   }
 }

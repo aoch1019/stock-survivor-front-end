@@ -7,32 +7,35 @@ import { connect } from 'react-redux'
 class TodaysPickContainer extends Component {
 
   componentDidMount(){
-    this.locateOrCreateEntry()
+    this.locateEntry()
   }
 
-  async locateOrCreateEntry(){
+  async locateEntry(){
     const entryList = await fetch('http://localhost:3000/entries').then(res => res.json())
     const locateEntry = entryList.find(entry => (entry.pool_id === this.props.currPoolId && entry.user_id === this.props.currUser.id))
 
     if(!!locateEntry){
-      this.props.changeEntry(locateEntry)
-      this.locatePick()
+      this.locatePick(locateEntry)
     }
   }
 
-  async locatePick(){
+  async locatePick(entry){
     const pickList = await fetch('http://localhost:3000/picks').then(res => res.json())
-    const locatePick = pickList.find(pick => (pick.day === this.props.currDay && pick.entry_id === this.props.currEntry.id))
+    const locatePick = pickList.find(pick => (pick.day === this.props.currDay && pick.entry_id === entry.id))
 
     if(!!locatePick){
-      this.locateCurrStockFromIdAndChangePick(locatePick)
+      this.locateCurrStockFromIdAndChangePickAndEntry(locatePick, entry)
+    }
+    else if(this.props.currDay > 1){
+      this.props.changeEntry(entry)
     }
   }
 
-  async locateCurrStockFromIdAndChangePick(pick){
+  async locateCurrStockFromIdAndChangePickAndEntry(pick, entry){
     const currStock = await fetch(`http://localhost:3000/stocks/${pick.stock_id}`).then(res => res.json())
     this.props.changeStock(currStock)
     this.props.changePick(pick)
+    this.props.changeEntry(entry)
   }
 
   render(){
@@ -45,16 +48,24 @@ class TodaysPickContainer extends Component {
           <p>{this.props.currEntry.alive && "Still alive!"}</p>
         </React.Fragment>}
 
-        {this.props.currPick !== null
+        {!!this.props.currEntry
           ?
             !!this.props.currEntry.alive
             ?
-            < ViewPickContainer />
+              !!this.props.currPick
+              ?
+              < ViewPickContainer />
+              :
+              < MakePickContainer />
             :
             < EliminatedView />
 
           :
-          < MakePickContainer />
+            this.props.currDay === 1
+            ?
+            < MakePickContainer />
+            :
+            <div>Pool already started!</div>
         }
       </div>
     )

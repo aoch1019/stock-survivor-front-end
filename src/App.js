@@ -24,6 +24,7 @@ class App extends Component {
 
   componentDidMount(){
     this.getStocksFromAPI()
+    this.locateOrCreatePool()
     this.createInterval()
   }
 
@@ -35,12 +36,30 @@ class App extends Component {
     this.interval = setInterval(() => this.checkForMarketClose(), 1000)
   }
 
+  async locateOrCreatePool(){
+    const poolList = await fetch('http://localhost:3000/pools').then(res => res.json())
+    const locatePool = poolList.find(pool => (pool.id === this.props.currPoolId))
+    if(!locatePool){
+      const start = `${new Date().getFullYear()}-${new Date().getMonth() + 1}-${new Date().getDate()}`
+      fetch(`http://localhost:3000/pools`, {
+                                headers: {
+                                  'Accept': 'application/json',
+                                  'Content-Type': 'application/json'
+                                },
+                                method: 'POST',
+                                body: JSON.stringify({
+                                  start_date: start
+                                })
+                              })
+    }
+  }
+
   checkForMarketClose(){
     const marketClose = new Date(new Date().getFullYear(),
                            new Date().getMonth(),
                            new Date().getDate(),
-                           17,
-                           4,
+                           16,
+                           0,
                            0)
     if(new Date().getHours() === marketClose.getHours() &&
        new Date().getMinutes() === marketClose.getMinutes() &&
@@ -48,13 +67,12 @@ class App extends Component {
        new Date().getDay() !== 0 &&
        new Date().getDay() < 5){
       this.updateEntryAliveStatus()
-      this.props.incrementDay(this.props.currDay + 1)
     }
   }
 
   async updateEntryAliveStatus(){
-    const aliveEntries = await fetch('http://localhost:3000/entries').then(res => res.json()).then(entries => entries.filter(entry => !!entry.alive))
-    aliveEntries.forEach(async (entry) => {
+    const aliveEntriesForCurrPool = await fetch('http://localhost:3000/entries').then(res => res.json()).then(entries => entries.filter(entry => (!!entry.alive && entry.pool_id === this.props.currPoolId)))
+    aliveEntriesForCurrPool.forEach(async (entry) => {
       const latestPickForEntry = await fetch('http://localhost:3000/picks').then(res => res.json()).then(picks => picks.filter(pick => pick.entry_id === entry.id))
                                        .then(entryPicks => {
                                          let currDayPick = entryPicks.find(pick => pick.day === this.props.currDay)
@@ -69,10 +87,15 @@ class App extends Component {
                                                                                                                                 return stockQuote.quote.extendedPrice
                                                                                                                               })
         if(getCurrPrice <= latestPickForEntry.initial_price){
+          console.log(`${entry.user_id} is dead! ${getStockTicker} went down to ${getCurrPrice}`)
           this.updateEntryInAPI(entry)
+        }
+        else{
+          console.log(`${entry.user_id} is still alive. ${getStockTicker} went up to ${getCurrPrice}`)
         }
       }
     })
+    // this.props.incrementDay(this.props.currDay + 1)
   }
 
   updateEntryInAPI(entry){
@@ -169,7 +192,8 @@ function mapStateToProps(state){
   return {
     currUser: state.currUser,
     stocks: state.stocks,
-    currDay: state.currDay
+    currDay: state.currDay,
+    currPoolId: state.currPoolId
   }
 }
 

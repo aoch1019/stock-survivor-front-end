@@ -1,10 +1,10 @@
 const defaultState = {
   stocks: [],
   currUser: null,
-  currPoolId: 2,
+  currPoolId: 6,
   currPick: null,
   currEntry: null,
-  currDay: 3,
+  currDay: 1,
   currPickedStock: null,
   currPoolEntries: null,
   poolInProgress: false,
