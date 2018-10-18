@@ -3,12 +3,18 @@ import { connect } from 'react-redux'
 import ViewPickInfo from './ViewPick-components/ViewPickInfo'
 import Timer from './ViewPick-components/Timer'
 import StockChart from '../../../containers/StockViewContainer/StockView-components/StockChart'
+import NewsFeed from '../../../containers/StockViewContainer/StockView-components/NewsFeed'
 import { Table } from 'semantic-ui-react';
 
 class ViewPickContainer extends Component {
 
+  state = {
+    newsfeedReady: false
+  }
+
   componentDidMount(){
     this.props.changeStockToView(this.props.currPickedStock.ticker)
+    this.setState({ newsfeedReady: true })
   }
 
   // deleteAndChangePick(){
@@ -110,7 +116,12 @@ class ViewPickContainer extends Component {
           */}
 
         < StockChart timeframe='1d'/>
-
+      {!!this.state.newsfeedReady &&
+        <React.Fragment>
+          <h2>Recent News:</h2>
+            < NewsFeed />
+        </React.Fragment>
+      }
         </React.Fragment>
     )
   }

@@ -20,8 +20,10 @@ class SubmitField extends Component{
                             }).then(res => res.json())
       this.props.changeStock(this.props.currStockSelection)
       this.props.makeStockPick(pickObj)
+      this.props.changeStockToView(this.props.currPickedStock.ticker)
       if(!!newEntry){
         this.props.changeEntry(entry)
+        this.props.changeStockToView(this.props.currPickedStock.ticker)
       }
   }
 
@@ -56,8 +58,6 @@ class SubmitField extends Component{
     let status = false
     const pickList = await fetch(`http://localhost:3000/picks`).then(res => res.json())
     pickList.forEach(pick => {
-      console.log(this.props.currEntry.id)
-      console.log(this.props.currStockSelection.id)
       if(pick.entry_id === this.props.currEntry.id && pick.stock_id === this.props.currStockSelection.id){
         status = true
       }
@@ -85,7 +85,8 @@ function mapStateToProps(state){
     currEntry: state.currEntry,
     currDay: state.currDay,
     currPoolId: state.currPoolId,
-    currUser: state.currUser
+    currUser: state.currUser,
+    currPickedStock: state.currPickedStock
   }
 }
 
@@ -99,6 +100,9 @@ function mapDispatchToProps(dispatch){
     },
     changeEntry: (entry) => {
       dispatch({type: 'CHANGE_ENTRY', payload: entry})
+    },
+    changeStockToView: (ticker) => {
+      dispatch({type: 'CHANGE_STOCK_TO_VIEW', payload: ticker})
     }
   }
 }
