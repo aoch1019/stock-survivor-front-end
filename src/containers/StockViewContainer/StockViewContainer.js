@@ -3,6 +3,8 @@ import StockChart from './StockView-components/StockChart'
 import NewsFeed from './StockView-components/NewsFeed'
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router';
+import { Image } from 'semantic-ui-react'
+import Palette from 'react-palette'
 
 class StockViewContainer extends Component {
 
@@ -36,7 +38,7 @@ class StockViewContainer extends Component {
     return(
       <React.Fragment>
         <div>
-          <img src={this.state.logo} alt=""></img>
+          <Image src={this.state.logo} size='small' circular centered />
         </div>
         < StockChart />
       <h2>Recent News:</h2>

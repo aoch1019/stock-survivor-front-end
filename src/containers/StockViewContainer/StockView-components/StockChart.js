@@ -13,27 +13,22 @@ class StockChart extends Component {
     this.state = {
       timeframe: "1m",
       chartData: {labels: [],
-      datasets: [{
-        label: `1m chart for ${this.props.stockToView}`,
-        data: [],
-        backgroundColor: [
-          'rgba(255, 99, 132, 0.2)',
-          'rgba(54, 162, 235, 0.2)',
-          'rgba(255, 206, 86, 0.2)',
-          'rgba(75, 192, 192, 0.2)',
-          'rgba(153, 102, 255, 0.2)',
-          'rgba(255, 159, 64, 0.2)'
-        ],
-        borderColor: [
-          'rgba(255,99,132,1)',
-          'rgba(54, 162, 235, 1)',
-          'rgba(255, 206, 86, 1)',
-          'rgba(75, 192, 192, 1)',
-          'rgba(153, 102, 255, 1)',
-          'rgba(255, 159, 64, 1)'
-        ],
-        borderWidth: 1
-      }]
+      datasets: [
+        {
+          label: `1m chart for ${this.props.stockToView}`,
+          data: [],
+          backgroundColor: 'rgba(0,0,0,0.1)',
+          borderColor: 'rgba(135, 206, 235)',
+          borderWidth: 3,
+          borderCapStyle: 'butt',
+          pointRadius: 6,
+          pointHoverRadius: 12,
+          pointHitRadius: 15,
+          pointHoverBackgroundColor: 'rgba(75, 192, 192, 1)',
+          borderJoinStyle: 'miter',
+          fill: false
+       }
+      ]
     }
     }
 
@@ -58,27 +53,22 @@ class StockChart extends Component {
     fetch(`https://api.iextrading.com/1.0/stock/${this.props.stockToView}/chart/${this.state.timeframe}`).then(res => res.json())
       .then(APIhash => {
         const dataset = {labels: [],
-        datasets: [{
-          label: `${this.state.timeframe} chart for ${this.props.stockToView}`,
-          data: [],
-          backgroundColor: [
-            'rgba(255, 99, 132, 0.2)',
-            'rgba(54, 162, 235, 0.2)',
-            'rgba(255, 206, 86, 0.2)',
-            'rgba(75, 192, 192, 0.2)',
-            'rgba(153, 102, 255, 0.2)',
-            'rgba(255, 159, 64, 0.2)'
-          ],
-          borderColor: [
-            'rgba(255,99,132,1)',
-            'rgba(54, 162, 235, 1)',
-            'rgba(255, 206, 86, 1)',
-            'rgba(75, 192, 192, 1)',
-            'rgba(153, 102, 255, 1)',
-            'rgba(255, 159, 64, 1)'
-          ],
-          borderWidth: 1
-        }]
+        datasets: [
+          {
+            label: `${this.state.timeframe} chart for ${this.props.stockToView}`,
+            data: [],
+            backgroundColor: 'rgba(0,0,0,0.1)',
+            borderColor: 'rgba(135, 206, 235)',
+            borderWidth: 3,
+            borderCapStyle: 'butt',
+            pointRadius: 4,
+            pointHoverRadius: 7,
+            pointHitRadius: 10,
+            pointHoverBackgroundColor: 'rgba(75, 192, 192, 1)',
+            borderJoinStyle: 'miter',
+            fill: false
+          }
+        ]
       }
         APIhash.forEach(dailyQuote => {
           const closePrice = dailyQuote.close
@@ -95,16 +85,37 @@ class StockChart extends Component {
       <React.Fragment>
         <div className="chart">
         < Line
+                height={600}
                 data = {this.state.chartData}
-                options = {{
-                  scales: {
-                    yAxes: [{
-                      ticks: {
-                        beginAtZero:true
-                      }
-                    }]
-                  }
+                options = {
+                  {
+                    maintainAspectRatio: false,
+                    responsive: true,
+                    scales: {
+                                xAxes: [
+                                  {
+                                      ticks: {
+                                         callback: function(label, index, labels) {
+                                           return label;
+                                         }
+                                      }
+                                  }
+                                ],
+                                yAxes: [
+                                  {
+                                      ticks: {
+                                         callback: function(label, index, labels) {
+                                           return label;
+                                         },
+                                         fontSize: 18,
+                                         fontColor: 'black'
+                                      },
+                                       display: true,
+                    }
+                                ]
+                            }
                 }}
+
            />
         </div>
         <div>
