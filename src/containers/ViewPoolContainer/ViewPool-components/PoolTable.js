@@ -5,9 +5,9 @@ import { connect } from 'react-redux'
 const PoolTable = (props) => {
 
     return(
-      <table className="ui celled striped padded table">
+      <table className="ui large celled striped padded table">
           <tbody>
-            <tr>
+            <tr class="center aligned">
               <th>
                 <h3 className="ui center aligned header">
                   User

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Line } from 'react-chartjs-2';
 import { connect } from 'react-redux'
+import { Button } from 'semantic-ui-react'
 
 
 
@@ -107,12 +108,14 @@ class StockChart extends Component {
            />
         </div>
         <div>
-          <button onClick={() => this.setState({ timeframe: "1d"}, () => this.getDataFromAPI())}>1d</button>
-          <button onClick={() => this.setState({ timeframe: "1m"}, () => this.getDataFromAPI())}>1m</button>
-          <button onClick={() => this.setState({ timeframe: "3m"}, () => this.getDataFromAPI())}>3m</button>
-          <button onClick={() => this.setState({ timeframe: "6m"}, () => this.getDataFromAPI())}>6m</button>
-          <button onClick={() => this.setState({ timeframe: "1y"}, () => this.getDataFromAPI())}>1y</button>
-          <button onClick={() => this.setState({ timeframe: "ytd"}, () => this.getDataFromAPI())}>ytd</button>
+          <Button.Group size='mini' compact>
+            <Button onClick={() => this.setState({ timeframe: "1d"}, () => this.getDataFromAPI())}>1d</Button>
+            <Button onClick={() => this.setState({ timeframe: "1m"}, () => this.getDataFromAPI())}>1m</Button>
+            <Button onClick={() => this.setState({ timeframe: "3m"}, () => this.getDataFromAPI())}>3m</Button>
+            <Button onClick={() => this.setState({ timeframe: "6m"}, () => this.getDataFromAPI())}>6m</Button>
+            <Button onClick={() => this.setState({ timeframe: "1y"}, () => this.getDataFromAPI())}>1y</Button>
+            <Button onClick={() => this.setState({ timeframe: "ytd"}, () => this.getDataFromAPI())}>ytd</Button>
+          </Button.Group>
         </div>
       </React.Fragment>
     )

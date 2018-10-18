@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux'
+import { Icon } from 'semantic-ui-react'
 
 class SubmitField extends Component{
 
@@ -66,11 +67,14 @@ class SubmitField extends Component{
 
   render(){
     return(
-      <div>
-        Would you like to submit {this.props.currStockSelection.name}?
-        <button onClick={() => this.createEntryAndPick()}>Yes</button>
-        <button onClick={this.props.handleNoClick}>No</button>
-      </div>
+      <React.Fragment>
+        <br></br>
+        <div>
+          <h4>Would you like to submit {this.props.currStockSelection.name}?</h4>
+          <Icon name='thumbs up outline' size='large' link onClick={() => this.createEntryAndPick()} />
+          <Icon name='thumbs down outline' size='large' link onClick={this.props.handleNoClick} />
+        </div>
+      </React.Fragment>
     )
   }
 

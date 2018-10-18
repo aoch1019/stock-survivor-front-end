@@ -85,23 +85,23 @@ class PoolTableRow extends Component {
       <React.Fragment>
         {!!this.state.pick && !!this.state.user && !!this.state.stock
           ?
-          <tr>
+          <tr class="center aligned">
             <th> {this.state.user.name} </th>
             <th> <Link to="/View-Stock" onClick={() => this.props.changeStockToView(this.state.stock.ticker)}>{this.state.stock.name}</Link></th>
             <th> {this.state.stock.ticker} </th>
             <th> {this.state.pick.initial_price} </th>
             <th> {this.state.currStockPrice} </th>
-            <th> {this.calculateChange()} </th>
+            <td class={this.calculateChange()[0] === '+' ? 'positive' : 'negative'} > {this.calculateChange()} </td>
           </tr>
           :
           !!this.state.user &&
-          <tr>
-            <th> {this.state.user.name} </th>
-            <th> TBD </th>
-            <th> TBD </th>
-            <th> TBD </th>
-            <th> TBD </th>
-            <th> TBD </th>
+          <tr class="center aligned">
+            <td> {this.state.user.name} </td>
+            <td> TBD </td>
+            <td> TBD </td>
+            <td> TBD </td>
+            <td> TBD </td>
+            <td> TBD </td>
           </tr>
         }
         </React.Fragment>
