@@ -7,7 +7,7 @@ const StockTable = (props) => {
     return(
       <table className="ui large celled striped padded table">
             <tbody>
-              <tr class="center aligned">
+              <tr className="center aligned">
                 <th>
                   <h3 className="ui left aligned header">
                     Name

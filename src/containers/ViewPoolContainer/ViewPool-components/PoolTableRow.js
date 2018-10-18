@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
+import { Table } from 'semantic-ui-react';
 
 class PoolTableRow extends Component {
 
@@ -8,7 +9,8 @@ class PoolTableRow extends Component {
     user: null,
     pick: null,
     stock: null,
-    currStockPrice: null
+    currStockPrice: null,
+    updated: false
   }
 
   async componentDidMount(){
@@ -67,9 +69,11 @@ class PoolTableRow extends Component {
   async updateStockPrice(stock){
     if(!!stock){
       const stockQuote = await fetch(`https://api.iextrading.com/1.0/stock/${stock.ticker}/book`).then(res => res.json())
-      this.setState({
-        currStockPrice: stockQuote.quote.extendedPrice
-      }, () => console.log(`Updated ${this.state.stock.name}!`))
+      this.setState((prevstate) => {
+        return {currStockPrice: stockQuote.quote.extendedPrice,
+                updated: true}
+      }, () => {console.log(`Updated ${this.state.stock.name}!`); setTimeout(() => this.setState({ updated: false }), 150)
+      })
     }
     return null
   }
@@ -85,14 +89,14 @@ class PoolTableRow extends Component {
       <React.Fragment>
         {!!this.state.pick && !!this.state.user && !!this.state.stock
           ?
-          <tr class="center aligned">
-            <th> {this.state.user.name} </th>
-            <th> <Link to="/View-Stock" onClick={() => this.props.changeStockToView(this.state.stock.ticker)}>{this.state.stock.name}</Link></th>
-            <th> {this.state.stock.ticker} </th>
-            <th> {this.state.pick.initial_price} </th>
-            <th> {this.state.currStockPrice} </th>
-            <td class={this.calculateChange()[0] === '+' ? 'positive' : 'negative'} > {this.calculateChange()} </td>
-          </tr>
+          <Table.Row>
+            <Table.Cell> {this.state.user.name} </Table.Cell>
+            <Table.Cell> <Link to="/View-Stock" onClick={() => this.props.changeStockToView(this.state.stock.ticker)}>{this.state.stock.name}</Link></Table.Cell>
+            <Table.Cell> {this.state.stock.ticker} </Table.Cell>
+            <Table.Cell> {this.state.pick.initial_price} </Table.Cell>
+            <Table.Cell active={this.state.updated}> {this.state.currStockPrice} </Table.Cell>
+            <Table.Cell positive={this.calculateChange()[0] === '+'} negative={this.calculateChange()[0] !== '+'}> {this.calculateChange()} </Table.Cell>
+          </Table.Row>
           :
           !!this.state.user &&
           <tr class="center aligned">

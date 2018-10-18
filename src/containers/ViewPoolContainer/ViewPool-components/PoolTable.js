@@ -1,44 +1,24 @@
 import React from 'react';
 import PoolTableRow from './PoolTableRow'
 import { connect } from 'react-redux'
+import { Table } from 'semantic-ui-react';
 
 const PoolTable = (props) => {
 
     return(
-      <table className="ui large celled striped padded table">
-          <tbody>
-            <tr class="center aligned">
-              <th>
-                <h3 className="ui center aligned header">
-                  User
-                </h3>
-              </th>
-              <th>
-                <h3 className="ui center aligned header">
-                  Stock
-                </h3>
-              </th>
-              <th>
-                <h3 className="ui center aligned header">
-                  Ticker
-                </h3>
-              </th>
-              <th>
-                <h3 className="ui center aligned header">
-                  Last Closing Price
-                </h3>
-              </th>
-              <th>
-                <h3 className="ui center aligned header">
-                  Current Price
-                </h3>
-              </th>
-              <th>
-                <h3 className="ui center aligned header">
-                  % Change
-                </h3>
-              </th>
-            </tr>
+      <Table celled striped textAlign='center'>
+        <Table.Header>
+          <Table.Row>
+            <Table.HeaderCell>User</Table.HeaderCell>
+            <Table.HeaderCell>Stock</Table.HeaderCell>
+            <Table.HeaderCell>Ticker</Table.HeaderCell>
+            <Table.HeaderCell>Last Closing Price</Table.HeaderCell>
+            <Table.HeaderCell>Current Price</Table.HeaderCell>
+            <Table.HeaderCell>% Change</Table.HeaderCell>
+          </Table.Row>
+        </Table.Header>
+
+        <Table.Body>
 
           {!!props.currPoolEntries && props.currPoolEntries.map((entry, idx) => {
             if(!!entry.alive){
@@ -48,9 +28,8 @@ const PoolTable = (props) => {
               return null
             }
           })}
-
-          </tbody>
-        </table>
+        </Table.Body>
+      </Table>
     )
 
 } /* End of class */

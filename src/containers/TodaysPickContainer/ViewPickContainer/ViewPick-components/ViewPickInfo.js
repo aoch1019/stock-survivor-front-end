@@ -1,16 +1,18 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
+import { Table } from 'semantic-ui-react';
 
 class ViewPickInfo extends Component {
 
   state = {
-    currStockPrice: null
+    currStockPrice: null,
+    updated: false
   }
 
   componentDidMount(){
     this.getCurrStockPrice()
-    this.interval = setInterval(() => this.getCurrStockPrice(), 1000)
+    this.interval = setInterval(() => this.getCurrStockPrice(), 2000)
   }
 
   componentWillUnmount(){
@@ -19,9 +21,11 @@ class ViewPickInfo extends Component {
 
   async getCurrStockPrice(){
     const stockQuote = await fetch(`https://api.iextrading.com/1.0/stock/${this.props.currPickedStock.ticker}/book`).then(res => res.json())
-    this.setState({
-      currStockPrice: stockQuote.quote.extendedPrice
-    }, () => console.log(`Updated ${this.props.currPickedStock.name}`))
+    this.setState((prevstate) => {
+      return {currStockPrice: stockQuote.quote.extendedPrice,
+              updated: true}
+    }, () => {console.log(`Updated ${this.props.currPickedStock.name}!`); setTimeout(() => this.setState({ updated: false }), 50)
+    })
   }
 
   calculateChange(){
@@ -32,14 +36,14 @@ class ViewPickInfo extends Component {
 
   render(){
     return(
-      <tr>
-        <th> <Link to="/View-Stock" onClick={() => this.props.changeStockToView(this.props.currPickedStock.ticker)}>{this.props.currPickedStock.name}</Link></th>
-        <th> {this.props.currPickedStock.ticker} </th>
-        <th> {this.props.currPickedStock.industry} </th>
-        <th> {this.props.currPick.initial_price} </th>
-        <th> {this.state.currStockPrice} </th>
-        <th> {this.calculateChange()} </th>
-      </tr>
+      <Table.Row>
+        <Table.Cell> <Link to="/View-Stock" onClick={() => this.props.changeStockToView(this.props.currPickedStock.ticker)}>{this.props.currPickedStock.name}</Link></Table.Cell>
+        <Table.Cell> {this.props.currPickedStock.ticker} </Table.Cell>
+        <Table.Cell> {this.props.currPickedStock.industry} </Table.Cell>
+        <Table.Cell> {this.props.currPick.initial_price} </Table.Cell>
+        <Table.Cell active={this.state.updated}> {this.state.currStockPrice} </Table.Cell>
+        <Table.Cell positive={this.calculateChange()[0] === '+'} negative={this.calculateChange()[0] !== '+'}> {this.calculateChange()} </Table.Cell>
+      </Table.Row>
     )
   }
 

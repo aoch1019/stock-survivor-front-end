@@ -6,8 +6,8 @@ import { Button } from 'semantic-ui-react'
 const StockRow = (props) => {
 
   return(
-    <tr class="center aligned">
-      <th class="left aligned"> <Link to="/View-Stock" onClick={() => props.changeStockToView(props.stockInfo.ticker)}>{props.stockInfo.name}</Link></th>
+    <tr className="center aligned">
+      <th className="left aligned"> <Link to="/View-Stock" onClick={() => props.changeStockToView(props.stockInfo.ticker)}>{props.stockInfo.name}</Link></th>
       <th> {props.stockInfo.ticker} </th>
       <th> {props.stockInfo.industry} </th>
       <th> {props.stockInfo.closing_price} </th>
