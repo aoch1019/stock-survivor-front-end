@@ -6,7 +6,7 @@ import { Table } from 'semantic-ui-react';
 const PoolTable = (props) => {
 
     return(
-      <Table celled striped textAlign='center'>
+      <Table size='large' celled padded striped textAlign='center'>
         <Table.Header>
           <Table.Row>
             <Table.HeaderCell>User</Table.HeaderCell>

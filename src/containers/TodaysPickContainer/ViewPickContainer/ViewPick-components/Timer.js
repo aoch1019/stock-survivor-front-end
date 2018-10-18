@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Header, Icon } from 'semantic-ui-react'
 
 export default class Timer extends Component {
 
@@ -69,9 +70,10 @@ export default class Timer extends Component {
 
   render(){
     return(
-      <div>
-        <h3>{this.state.hours}:{this.state.mins}:{this.state.secs} until market closes!</h3>
-      </div>
+      <Header as='h2'>
+        <Icon name="clock outline"/>
+        {this.state.hours}:{this.state.mins}:{this.state.secs}
+      </Header>
     )
   }
 

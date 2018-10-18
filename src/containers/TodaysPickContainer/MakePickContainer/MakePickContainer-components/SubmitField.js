@@ -71,8 +71,8 @@ class SubmitField extends Component{
         <br></br>
         <div>
           <h4>Would you like to submit {this.props.currStockSelection.name}?</h4>
-          <Icon name='thumbs up outline' size='large' link onClick={() => this.createEntryAndPick()} />
-          <Icon name='thumbs down outline' size='large' link onClick={this.props.handleNoClick} />
+          <Icon bordered circular name='thumbs up outline' size='large' link onClick={() => this.createEntryAndPick()} />
+          <Icon bordered circular name='thumbs down outline' size='large' link onClick={this.props.handleNoClick} />
         </div>
       </React.Fragment>
     )

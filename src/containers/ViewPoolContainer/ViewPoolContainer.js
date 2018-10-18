@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PoolTable from './ViewPool-components/PoolTable'
 import { connect } from 'react-redux'
 import Timer from '../TodaysPickContainer/ViewPickContainer/ViewPick-components/Timer'
+import { Message, Grid } from 'semantic-ui-react'
 
 class ViewPoolContainer extends Component {
 
@@ -22,10 +23,21 @@ class ViewPoolContainer extends Component {
   render(){
     return(
       <React.Fragment>
-        {!!this.props.currPoolEntries && `${this.entriesStillAlive()} of ${this.props.currPoolEntries.length} entries left`}
         <br></br>
-        {!!this.props.currDay && `Day ${this.props.currDay}`}
-        < Timer />
+        <Grid divided='vertically'>
+          <Grid.Row columns={3}>
+            <Grid.Column>
+                <h3>{!!this.props.currDay && `Day ${this.props.currDay}`}</h3>
+            </Grid.Column>
+            <Grid.Column>
+                < Timer />
+            </Grid.Column>
+            <Grid.Column>
+                <h3>{!!this.props.currPoolEntries && `${this.entriesStillAlive()} of ${this.props.currPoolEntries.length} entries left`}</h3>
+            </Grid.Column>
+          </Grid.Row>
+        </Grid>
+
         <div>
           < PoolTable />
         </div>

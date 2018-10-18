@@ -1,18 +1,15 @@
 import React from 'react';
+import { Segment, Header } from 'semantic-ui-react'
 
 const ArticleSummary = (props) => {
 
   return(
-    <React.Fragment>
-      <div>
-        <h3>{props.article.headline}</h3>
+    <Segment raised padded='very'>
+        <Header size='huge'>{props.article.headline}</Header>
         Source: {props.article.source}<br></br>
       <a href={props.article.url} target="_blank" rel="noopener noreferrer">View Article</a><br></br>
         {props.article.summary !== "No summary available." ? props.article.summary : null}<br></br>
-      </div>
-      <br></br>
-      <br></br>
-    </React.Fragment>
+    </Segment>
   )
 }
 
