@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router';
 import { NavLink } from 'react-router-dom';
+var GifPlayer = require('react-gif-player');
 
 class Login extends Component{
   constructor(props){
@@ -30,6 +31,7 @@ class Login extends Component{
   render(){
     return(
       <React.Fragment>
+        <img src="https://famfonts.com/wp-content/uploads/survivor-2-wide.png" />
         <form onSubmit={(event) => {event.preventDefault(); this.getUserFromAPI(); this.props.history.push('/Todays-Pick')}} className="ui form">
           <div className="field">
             <label>Please Login</label>

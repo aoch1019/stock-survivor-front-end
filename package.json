@@ -10,6 +10,7 @@
     "react-chartjs-2": "^2.7.4",
     "react-color": "^2.14.1",
     "react-dom": "^16.5.2",
+    "react-gif-player": "^0.4.1",
     "react-image-palette": "^0.2.4",
     "react-palette": "^0.1.3",
     "react-redux": "^5.0.7",
