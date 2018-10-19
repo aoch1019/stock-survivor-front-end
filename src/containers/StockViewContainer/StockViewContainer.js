@@ -4,7 +4,6 @@ import NewsFeed from './StockView-components/NewsFeed'
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router';
 import { Image } from 'semantic-ui-react'
-import Palette from 'react-palette'
 
 class StockViewContainer extends Component {
 

@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PoolTable from './ViewPool-components/PoolTable'
 import { connect } from 'react-redux'
 import Timer from '../TodaysPickContainer/ViewPickContainer/ViewPick-components/Timer'
-import { Message, Grid } from 'semantic-ui-react'
+import { Grid } from 'semantic-ui-react'
 
 class ViewPoolContainer extends Component {
 
