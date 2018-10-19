@@ -10,7 +10,8 @@ class PoolTableRow extends Component {
     pick: null,
     stock: null,
     currStockPrice: null,
-    updated: false
+    updated: false,
+    entriesLeft: this.props.aliveEntries.length
   }
 
   async componentDidMount(){
@@ -22,10 +23,31 @@ class PoolTableRow extends Component {
       user: user,
       pick: pick,
       stock: stock,
-      currStockPrice: currPrice
+      currStockPrice: currPrice,
+      entriesLeft: this.props.aliveEntries.length
     })
     if(!!currPrice){
       this.createInterval()
+    }
+  }
+
+  async updateRow(){
+    const user = await this.getUserFromEntry()
+    const pick = await this.getPickFromEntry()
+    const stock = await this.getStockFromPick(pick)
+    const currPrice = await this.getCurrStockPrice(stock)
+    this.setState({
+      user: user,
+      pick: pick,
+      stock: stock,
+      currStockPrice: currPrice,
+      entriesLeft: this.props.aliveEntries.length
+    })
+  }
+
+  componentDidUpdate(prevProps){
+    if(this.state.entriesLeft !== this.props.aliveEntries.length){
+      this.updateRow()
     }
   }
 
@@ -72,7 +94,7 @@ class PoolTableRow extends Component {
       this.setState((prevstate) => {
         return {currStockPrice: stockQuote.quote.extendedPrice,
                 updated: true}
-      }, () => {console.log(`Updated ${this.state.stock.name}!`); setTimeout(() => this.setState({ updated: false }), 150)
+      }, () => {setTimeout(() => this.setState({ updated: false }), 150)
       })
     }
     return null
@@ -99,14 +121,14 @@ class PoolTableRow extends Component {
           </Table.Row>
           :
           !!this.state.user &&
-          <tr class="center aligned">
-            <td> {this.state.user.name} </td>
-            <td> TBD </td>
-            <td> TBD </td>
-            <td> TBD </td>
-            <td> TBD </td>
-            <td> TBD </td>
-          </tr>
+          <Table.Row>
+            <Table.Cell> {this.state.user.name} </Table.Cell>
+            <Table.Cell> TBD </Table.Cell>
+            <Table.Cell> TBD </Table.Cell>
+            <Table.Cell> TBD </Table.Cell>
+            <Table.Cell> TBD </Table.Cell>
+            <Table.Cell> TBD </Table.Cell>
+          </Table.Row>
         }
         </React.Fragment>
     )
@@ -116,7 +138,8 @@ class PoolTableRow extends Component {
 
 function mapStateToProps(state){
   return {
-    currDay: state.currDay
+    currDay: state.currDay,
+    aliveEntries: state.aliveEntries
   }
 }
 

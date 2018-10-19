@@ -24,7 +24,7 @@ class ViewPickInfo extends Component {
     this.setState((prevstate) => {
       return {currStockPrice: stockQuote.quote.extendedPrice,
               updated: true}
-    }, () => {console.log(`Updated ${this.props.currPickedStock.name}!`); setTimeout(() => this.setState({ updated: false }), 50)
+    }, () => {setTimeout(() => this.setState({ updated: false }), 50)
     })
   }
 

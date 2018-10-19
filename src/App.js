@@ -91,7 +91,6 @@ class App extends Component {
         if(getCurrPrice <= latestPickForEntry.initial_price){
           console.log(`${entry.user_id} is dead! ${getStockTicker} went down to ${getCurrPrice}`)
           this.updateEntryInAPI(entry)
-          this.updateEntryList(entry)
         }
         else{
           console.log(`${entry.user_id} is still alive. ${getStockTicker} went up to ${getCurrPrice}`)
@@ -110,22 +109,29 @@ class App extends Component {
                               body: JSON.stringify({
                                 ...entry, alive: false
                               })
+                            }).then(updatedEntry => {
+                              let newList = this.props.aliveEntries.filter(currEntry => {
+                                return currEntry.id !== entry.id
+                                })
+                              this.props.updateAliveEntries(newList)
                             })
   }
 
-  updateEntryList(entry){
-    let entryArr = this.props.aliveEntries.slice()
-    let entryIndex = -1
-    entryArr.forEach((currEntry, idx) => {
-      if(currEntry.id === entry.id){
-        entryIndex = idx
-      }
-    })
-    if(entryIndex > -1){
-      entryArr.splice(entryIndex, 1)
-    }
-    this.props.updateAliveEntries(entryArr)
-  }
+  // async updateEntryList(){
+  //   // let entryArr = this.props.aliveEntries.slice()
+  //   // let entryIndex = -1
+  //   // entryArr.forEach((currEntry, idx) => {
+  //   //   if(currEntry.id === entry.id){
+  //   //     entryIndex = idx
+  //   //   }
+  //   // })
+  //   // if(entryIndex > -1){
+  //   //   entryArr.splice(entryIndex, 1)
+  //   // }
+  //   let allEntries = await fetch('http://localhost:3000/entries').then(res => res.json())
+  //   let getAliveEntries = allEntries.filter(entry => entry.pool_id === this.props.currPoolId && !!entry.alive)
+  //   this.props.updateAliveEntries(getAliveEntries)
+  // }
 
   logout(){
     this.props.changeUser(null)
@@ -216,6 +222,7 @@ function mapStateToProps(state){
     stocks: state.stocks,
     currDay: state.currDay,
     currPoolId: state.currPoolId,
+    currPoolEntries: state.currPoolEntries,
     aliveEntries: state.aliveEntries
   }
 }

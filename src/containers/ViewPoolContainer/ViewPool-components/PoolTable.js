@@ -4,7 +4,6 @@ import { connect } from 'react-redux'
 import { Table } from 'semantic-ui-react';
 
 const PoolTable = (props) => {
-
     return(
       <Table size='large' celled padded striped textAlign='center'>
         <Table.Header>
