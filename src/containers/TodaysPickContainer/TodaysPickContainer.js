@@ -40,14 +40,7 @@ class TodaysPickContainer extends Component {
 
   render(){
     return(
-      <div>
-        {!!this.props.currEntry
-          &&
-        <React.Fragment>
-          <p>Entry details -- user id: {this.props.currEntry.user_id} pool id: {this.props.currEntry.pool_id}</p>
-          <p>{this.props.currEntry.alive && "Still alive!"}</p>
-        </React.Fragment>}
-
+      <React.Fragment>
         {!!this.props.currEntry
           ?
             !!this.props.currEntry.alive
@@ -67,7 +60,7 @@ class TodaysPickContainer extends Component {
             :
             <div>Pool already started!</div>
         }
-      </div>
+      </React.Fragment>
     )
   }
 } /* End of class */

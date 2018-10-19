@@ -8,7 +8,6 @@ import NavBar from './NavBar'
 import { Route } from 'react-router-dom';
 import { withRouter } from 'react-router';
 import { NavLink } from 'react-router-dom';
-import { Button } from 'semantic-ui-react'
 import Signup from './containers/LoginContainer/Login-Signup-components/Signup'
 import StockViewContainer from './containers/StockViewContainer/StockViewContainer'
 
@@ -133,13 +132,6 @@ class App extends Component {
   //   this.props.updateAliveEntries(getAliveEntries)
   // }
 
-  logout(){
-    this.props.changeUser(null)
-    this.props.changeEntry(null)
-    this.props.makeStockPick(null)
-    this.props.changeStock(null)
-  }
-
   goToNextDay(){
     this.props.incrementDay(this.props.currDay + 1)
     this.updateEntryAliveStatus()
@@ -148,14 +140,13 @@ class App extends Component {
   render() {
     return (
       <React.Fragment>
-        <Button floated='right' icon='hourglass end' data-tooltip='Go to next day' data-position='bottom right' onClick={() => this.goToNextDay()}/>
-        {this.props.currUser !== null &&
-          <div>
-            Logged in as {this.props.currUser.name} <button onClick={() => this.logout()}>Logout</button>
-          </div>
-        }
         <div className="App">
-          <NavBar />
+          <NavBar goToNextDay={() => this.goToNextDay()}/>
+            {this.props.currUser !== null &&
+              <h3>
+                Hello {this.props.currUser.name}!
+              </h3>
+            }
             <div className="App-body">
               <Route
                 exact path="/Login"

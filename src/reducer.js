@@ -1,7 +1,7 @@
 const defaultState = {
   stocks: [],
   currUser: null,
-  currPoolId: 48,
+  currPoolId: 50,
   currPick: null,
   currEntry: null,
   currDay: 1,

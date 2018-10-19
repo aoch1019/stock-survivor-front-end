@@ -23,7 +23,7 @@ class Login extends Component{
 
   async getUserFromAPI(){
     const userList = await fetch('http://localhost:3000/users').then(res => res.json())
-    const userObj = userList.find(user => user.name === this.state.currInput)
+    const userObj = userList.find(user => user.name.toLowerCase() === this.state.currInput.toLowerCase())
     !!userObj ? this.props.changeUser(userObj) : alert("User not found, please try again!")
   }
 
