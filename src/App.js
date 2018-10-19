@@ -91,6 +91,7 @@ class App extends Component {
         if(getCurrPrice <= latestPickForEntry.initial_price){
           console.log(`${entry.user_id} is dead! ${getStockTicker} went down to ${getCurrPrice}`)
           this.updateEntryInAPI(entry)
+          this.updateEntryList(entry)
         }
         else{
           console.log(`${entry.user_id} is still alive. ${getStockTicker} went up to ${getCurrPrice}`)
@@ -110,6 +111,20 @@ class App extends Component {
                                 ...entry, alive: false
                               })
                             })
+  }
+
+  updateEntryList(entry){
+    let entryArr = this.props.aliveEntries.slice()
+    let entryIndex = -1
+    entryArr.forEach((currEntry, idx) => {
+      if(currEntry.id === entry.id){
+        entryIndex = idx
+      }
+    })
+    if(entryIndex > -1){
+      entryArr.splice(entryIndex, 1)
+    }
+    this.props.updateAliveEntries(entryArr)
   }
 
   logout(){
@@ -200,7 +215,8 @@ function mapStateToProps(state){
     currUser: state.currUser,
     stocks: state.stocks,
     currDay: state.currDay,
-    currPoolId: state.currPoolId
+    currPoolId: state.currPoolId,
+    aliveEntries: state.aliveEntries
   }
 }
 
@@ -224,8 +240,8 @@ function mapDispatchToProps(dispatch){
     incrementDay: (day) => {
       dispatch({type: 'CHANGE_DAY', payload: day})
     },
-    setCurrPoolEntries: (entries) => {
-      dispatch({type: 'CHANGE_POOL_ENTRIES', payload: entries})
+    updateAliveEntries: (entries) => {
+      dispatch({type: 'UPDATE_ALIVE_ENTRIES', payload: entries})
     }
   }
 }

@@ -20,11 +20,12 @@ const PoolTable = (props) => {
 
         <Table.Body>
 
-          {!!props.currPoolEntries && props.currPoolEntries.map((entry, idx) => {
+          {!!props.aliveEntries && props.aliveEntries.map((entry, idx) => {
             if(!!entry.alive){
               return < PoolTableRow key={idx} entry={entry} />
             }
             else{
+              debugger
               return null
             }
           })}
@@ -36,7 +37,7 @@ const PoolTable = (props) => {
 
 function mapStateToProps(state){
   return {
-    currPoolEntries: state.currPoolEntries
+    aliveEntries: state.aliveEntries
   }
 }
 

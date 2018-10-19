@@ -14,10 +14,11 @@ class ViewPoolContainer extends Component {
     let allEntries = await fetch('http://localhost:3000/entries').then(res => res.json())
     let currPoolEntries = allEntries.filter(entry => entry.pool_id === this.props.currPoolId)
     this.props.setCurrPoolEntries(currPoolEntries)
+    this.props.updateAliveEntries(this.entriesStillAlive(currPoolEntries))
   }
 
-  entriesStillAlive(){
-    return this.props.currPoolEntries.filter(entry => !!entry.alive).length
+  entriesStillAlive(currPoolEntries){
+    return currPoolEntries.filter(entry => !!entry.alive)
   }
 
   render(){
@@ -33,7 +34,7 @@ class ViewPoolContainer extends Component {
                 < Timer />
             </Grid.Column>
             <Grid.Column>
-                <h3>{!!this.props.currPoolEntries && `${this.entriesStillAlive()} of ${this.props.currPoolEntries.length} entries left`}</h3>
+                <h3>{!!this.props.currPoolEntries && !!this.props.aliveEntries && `${this.props.aliveEntries.length} of ${this.props.currPoolEntries.length} entries left`}</h3>
             </Grid.Column>
           </Grid.Row>
         </Grid>
@@ -52,7 +53,8 @@ function mapStateToProps(state){
   return {
     currPoolId: state.currPoolId,
     currPoolEntries: state.currPoolEntries,
-    currDay: state.currDay
+    currDay: state.currDay,
+    aliveEntries: state.aliveEntries
   }
 }
 
@@ -60,6 +62,9 @@ function mapDispatchToProps(dispatch){
   return {
     setCurrPoolEntries: (entries) => {
       dispatch({type: 'CHANGE_POOL_ENTRIES', payload: entries})
+    },
+    updateAliveEntries: (count) => {
+      dispatch({type: 'UPDATE_ALIVE_ENTRIES', payload: count})
     }
   }
 }
