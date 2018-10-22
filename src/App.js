@@ -10,6 +10,7 @@ import { withRouter } from 'react-router';
 import { NavLink } from 'react-router-dom';
 import Signup from './containers/LoginContainer/Login-Signup-components/Signup'
 import StockViewContainer from './containers/StockViewContainer/StockViewContainer'
+import Profile from './containers/Profile/Profile'
 
 class App extends Component {
 
@@ -198,6 +199,23 @@ class App extends Component {
                   )
                 }}
               />
+              <Route
+                exact path="/Profile"
+                render={ (renderProps) => {
+                  return (
+                    !!this.props.currProfile
+                    ?
+                    < Profile />
+                    :
+                    <React.Fragment>
+                      <p>Please Login</p>
+                      <NavLink className="ui button"
+                               to="/Login">
+                               Login</NavLink>
+                    </React.Fragment>
+                  )
+                }}
+              />
             </div>
         </div>
       </React.Fragment>
@@ -214,7 +232,8 @@ function mapStateToProps(state){
     currDay: state.currDay,
     currPoolId: state.currPoolId,
     currPoolEntries: state.currPoolEntries,
-    aliveEntries: state.aliveEntries
+    aliveEntries: state.aliveEntries,
+    currProfile: state.currProfile
   }
 }
 

@@ -56,7 +56,7 @@ class Signup extends Component{
           </div>
         :
           <React.Fragment>
-            <img src="https://famfonts.com/wp-content/uploads/survivor-2-wide.png" />
+            <img src="https://famfonts.com/wp-content/uploads/survivor-2-wide.png" alt="" />
             <form onSubmit={(event) => {event.preventDefault(); this.addUserToAPIAndLogin(); this.props.history.push('/Todays-Pick')}} className="ui form">
               <div className="field">
                 <label>Please create your username</label>

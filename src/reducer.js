@@ -1,7 +1,7 @@
 const defaultState = {
   stocks: [],
   currUser: null,
-  currPoolId: 50,
+  currPoolId: 52,
   currPick: null,
   currEntry: null,
   currDay: 1,
@@ -9,7 +9,8 @@ const defaultState = {
   currPoolEntries: null,
   poolInProgress: false,
   stockToView: null,
-  aliveEntries: null
+  aliveEntries: null,
+  currProfile: null
 }
 
 function reducer(state = defaultState, action){
@@ -32,6 +33,8 @@ function reducer(state = defaultState, action){
       return {...state, stockToView: action.payload}
     case "UPDATE_ALIVE_ENTRIES":
       return {...state, aliveEntries: action.payload}
+    case "CHANGE_PROFILE":
+      return {...state, currProfile: action.payload}
     default:
       return state
   }
