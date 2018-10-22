@@ -136,7 +136,7 @@ class Profile extends Component {
                 ?
               <Segment>
                 <Header as='h3'> Most Common Stock:</Header>
-                <p><Link to="/View-Stock" onClick={() => this.props.changeStockToView(this.state.mostCommonStock.ticker)}>{this.state.mostCommonStock.name}</Link> -- {this.state.mostCommonStockCount} times</p>
+                <h3><Link to="/View-Stock" onClick={() => this.props.changeStockToView(this.state.mostCommonStock.ticker)}>{this.state.mostCommonStock.name}</Link> -- {this.state.mostCommonStockCount} times</h3>
               </Segment>
                 :
               <React.Fragment>
