@@ -123,7 +123,7 @@ class PoolTableRow extends Component {
           :
           !!this.state.user &&
           <Table.Row>
-            <Table.Cell> {this.state.user.name} </Table.Cell>
+            <Table.Cell> <Link to="/Profile" onClick={() => this.props.changeProfile(this.state.user)}>{this.state.user.name}</Link></Table.Cell>
             <Table.Cell> TBD </Table.Cell>
             <Table.Cell> TBD </Table.Cell>
             <Table.Cell> TBD </Table.Cell>
@@ -151,7 +151,7 @@ function mapDispatchToProps(dispatch){
     },
     changeProfile: (user) => {
       dispatch({type: 'CHANGE_PROFILE', payload: user})
-    }    
+    }
   }
 }
 
