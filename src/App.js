@@ -143,11 +143,6 @@ class App extends Component {
       <React.Fragment>
         <div className="App">
           <NavBar goToNextDay={() => this.goToNextDay()}/>
-            {this.props.currUser !== null &&
-              <h3>
-                Hello {this.props.currUser.name}!
-              </h3>
-            }
             <div className="App-body">
               <Route
                 exact path="/Login"

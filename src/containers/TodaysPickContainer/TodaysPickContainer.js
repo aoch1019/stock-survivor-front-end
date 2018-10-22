@@ -41,6 +41,11 @@ class TodaysPickContainer extends Component {
   render(){
     return(
       <React.Fragment>
+        {this.props.currUser !== null &&
+          <h3>
+            Hello {this.props.currUser.name}!
+          </h3>
+        }
         {!!this.props.currEntry
           ?
             !!this.props.currEntry.alive

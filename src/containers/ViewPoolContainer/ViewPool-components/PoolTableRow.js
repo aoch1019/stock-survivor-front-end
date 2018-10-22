@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { Table } from 'semantic-ui-react';
+import { withRouter } from 'react-router';
 
 class PoolTableRow extends Component {
 
@@ -112,7 +113,7 @@ class PoolTableRow extends Component {
         {!!this.state.pick && !!this.state.user && !!this.state.stock
           ?
           <Table.Row>
-            <Table.Cell> {this.state.user.name} </Table.Cell>
+            <Table.Cell> <Link to="/Profile" onClick={() => this.props.changeProfile(this.state.user)}>{this.state.user.name}</Link></Table.Cell>
             <Table.Cell> <Link to="/View-Stock" onClick={() => this.props.changeStockToView(this.state.stock.ticker)}>{this.state.stock.name}</Link></Table.Cell>
             <Table.Cell> {this.state.stock.ticker} </Table.Cell>
             <Table.Cell> {this.state.pick.initial_price} </Table.Cell>
@@ -147,8 +148,11 @@ function mapDispatchToProps(dispatch){
   return {
     changeStockToView: (ticker) => {
       dispatch({type: 'CHANGE_STOCK_TO_VIEW', payload: ticker})
-    }
+    },
+    changeProfile: (user) => {
+      dispatch({type: 'CHANGE_PROFILE', payload: user})
+    }    
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(PoolTableRow)
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(PoolTableRow))
