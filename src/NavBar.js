@@ -31,7 +31,7 @@ class NavBar extends Component {
           <Menu.Item name='Todays-Pick' onClick={this.handleItemClick} active={activeItem === 'Todays-Pick'} >Today's Pick</Menu.Item>
           <Menu.Item name='View-Pool' onClick={this.handleItemClick} active={activeItem === 'View-Pool'} >View Pool</Menu.Item>
           <Menu.Menu position='right'>
-            <Menu.Item name='Profile' onClick={(e, name) => {this.handleItemClick(e, name); this.props.changeProfile(this.props.currUser)}} active={activeItem === 'View-Pool'} >Profile</Menu.Item>
+            <Menu.Item name='Profile' onClick={(e, name) => {this.handleItemClick(e, name); this.props.changeProfile(this.props.currUser)}} active={activeItem === 'Profile'} >Profile</Menu.Item>
             <Menu.Item name='Login' onClick={(e, name) => {this.handleItemClick(e, name); this.logout()}}>Logout</Menu.Item>
             <Button fitted='true' floated='right' icon='hourglass end' data-tooltip='Go to next day' data-position='bottom right' onClick={() => this.props.goToNextDay()}/>
           </Menu.Menu>

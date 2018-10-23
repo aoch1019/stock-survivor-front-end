@@ -85,7 +85,7 @@ class StockChart extends Component {
       <React.Fragment>
         <div className="chart">
         < Line
-                height={600}
+                height={500}
                 data = {this.state.chartData}
                 options = {
                   {

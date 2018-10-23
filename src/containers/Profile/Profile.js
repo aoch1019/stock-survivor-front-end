@@ -121,7 +121,7 @@ class Profile extends Component {
     return(
       <React.Fragment>
         <Segment.Group raised padded='very' size='big'>
-          <Segment><Header as='h1'> Welcome to {this.props.currProfile.name}'s profile</Header></Segment>
+          <Segment><Header as='h1'> Welcome to {this.props.currProfile.name + `'s`} profile</Header></Segment>
           <Segment.Group>
             <Segment><Header as='h4'> Member Since: {this.transformDate(this.props.currProfile.created_at.toString().slice(0,10))}</Header></Segment>
           </Segment.Group>
@@ -136,7 +136,7 @@ class Profile extends Component {
                 ?
               <Segment>
                 <Header as='h3'> Most Common Stock:</Header>
-                <h3><Link to="/View-Stock" onClick={() => this.props.changeStockToView(this.state.mostCommonStock.ticker)}>{this.state.mostCommonStock.name}</Link> -- {this.state.mostCommonStockCount} times</h3>
+                <h3><Link to="/View-Stock" onClick={() => this.props.changeStockToView(this.state.mostCommonStock.ticker)}>{this.state.mostCommonStock.name}</Link> -- {this.state.mostCommonStockCount} time(s)</h3>
               </Segment>
                 :
               <React.Fragment>
