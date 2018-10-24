@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux'
 import ArticleSummary from './ArticleSummary'
+import { Container, Header, Icon } from 'semantic-ui-react';
 
 class NewsFeed extends Component {
 
@@ -26,10 +27,15 @@ class NewsFeed extends Component {
 
   render(){
     return(
-        this.state.news.map((article,idx) => {
+      <Container>
+        <Header textAlign='center' block as='h1'>
+          <Icon fitted name='newspaper outline' />
+          <Header.Content textAlign='center'>Recent News</Header.Content>
+        </Header>
+        {this.state.news.map((article,idx) => {
           return < ArticleSummary key={idx} article={article} />
-        })
-
+        })}
+      </Container>
     )
   }
 }

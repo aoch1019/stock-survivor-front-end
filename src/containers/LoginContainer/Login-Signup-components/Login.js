@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router';
 import { NavLink } from 'react-router-dom';
+import { Input } from 'semantic-ui-react';
 
 class Login extends Component{
   constructor(props){
@@ -34,7 +35,8 @@ class Login extends Component{
         <form onSubmit={(event) => {event.preventDefault(); this.getUserFromAPI(); this.props.history.push('/Todays-Pick')}} className="ui form">
           <div className="field">
             <label>Please Login</label>
-            <input
+            <Input
+              style={{ width: "1100px" }}
               placeholder="Username"
               type="text"
               value={this.state.currInput}
@@ -42,6 +44,7 @@ class Login extends Component{
             />
           </div>
             <input  type='submit'
+                    value="Login"
                     className="ui submit button" />
         </form>
         <br></br>
