@@ -40,7 +40,7 @@ class StockViewContainer extends Component {
           <Image src={this.state.logo} size='small' circular centered />
         </div>
         < StockChart />
-      <h2>Recent News:</h2>
+      <h1 class="ui block header">Recent News:</h1>
         < NewsFeed />
       </React.Fragment>
     )
