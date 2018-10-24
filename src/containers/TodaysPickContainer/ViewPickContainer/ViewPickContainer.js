@@ -118,7 +118,7 @@ class ViewPickContainer extends Component {
         < StockChart timeframe='1d'/>
       {!!this.state.newsfeedReady &&
         <React.Fragment>
-          <h2>Recent News:</h2>
+          <br></br><br></br>
             < NewsFeed />
         </React.Fragment>
       }

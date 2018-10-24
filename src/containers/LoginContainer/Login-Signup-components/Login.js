@@ -36,7 +36,7 @@ class Login extends Component{
           <div className="field">
             <label>Please Login</label>
             <Input
-              style={{ width: "1100px" }}
+              style={{ width: "1220px" }}
               placeholder="Username"
               type="text"
               value={this.state.currInput}

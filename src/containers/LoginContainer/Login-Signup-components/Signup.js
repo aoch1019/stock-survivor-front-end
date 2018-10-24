@@ -62,7 +62,7 @@ class Signup extends Component{
               <div className="field">
                 <label>Please create your username</label>
                 <Input
-                  style={{ width: "1100px" }}
+                  style={{ width: "1220px" }}
                   placeholder="Username"
                   type="text"
                   value={this.state.currInput}
