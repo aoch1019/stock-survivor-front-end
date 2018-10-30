@@ -8,11 +8,10 @@ My mission was to create a fun and engaging stock-related game to get everyday p
 # Tech/framework used
 
 ### Built with
-  Ruby on Rails
-  React (Redux)
-  Chart.js
-  Semantic UI
-  IEX API
+  * Ruby on Rails
+  * React (Redux)
+  * Chart.js
+  * Semantic UI
 
 # Features
 In addition to standard gameplay, do stock research using the stock charts and recent news features available.
